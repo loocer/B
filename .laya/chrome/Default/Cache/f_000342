@@ -1,0 +1,781 @@
+var urlAddress=window.location.href;
+var middleStr=urlAddress.substring(urlAddress.indexOf("."));
+middleStr=middleStr.substring(0,middleStr.indexOf("/"));
+var middleArr=middleStr.split(".");
+var requireUrl1=middleArr[middleArr.length-2]+"."+middleArr[middleArr.length-1];
+_cookie_domain = requireUrl1;
+
+var store_city = [];
+var pluginColors = ["#ff8080", "#ffff80", "#80ff80", "#00ff80", "#80ffff", "#0080ff", "#ff80c0", "#ff80ff", "#ff0000", "#ffff00", "#80ff00", "#00ff40", "#00ffff", "#0080c0", "#8080c0", "#ff00ff", "#804040", "#ff8040", "#00ff00", "#008080", "#004080", "#8080ff", "#800040", "#ff0080", "#800000", "#ff8000", "#008000", "#008040", "#0000ff", "#0000a0", "#800080", "#8000ff", "#400000", "#804000", "#004000", "#004040", "#000080", "#000040", "#400040", "#400080", "#000000", "#808000", "#808040", "#808080", "#408080", "#c0c0c0", "#400040", "#ffffff"];
+var currentSelectProvinceName = "";
+var d = new Date();
+var hour = d.getHours();
+var ua = navigator.userAgent.toLowerCase();
+var theProvs = [];
+theProvs[10] = "A 安徽";
+theProvs[11] = "A 澳门";
+theProvs[12] = "B 北京";
+theProvs[43] = "C 重庆";
+theProvs[13] = "F 福建";
+theProvs[14] = "G 甘肃";
+theProvs[15] = "G 广东";
+theProvs[16] = "G 广西";
+theProvs[17] = "G 贵州";
+theProvs[18] = "H 海南";
+theProvs[19] = "H 河北";
+theProvs[20] = "H 河南";
+theProvs[21] = "H 黑龙江";
+theProvs[22] = "H 湖北";
+theProvs[23] = "H 湖南";
+theProvs[24] = "J 吉林";
+theProvs[25] = "J 江苏";
+theProvs[26] = "J 江西";
+theProvs[27] = "L 辽宁";
+theProvs[28] = "N 内蒙古";
+theProvs[29] = "N 宁夏";
+theProvs[30] = "Q 青海";
+theProvs[31] = "S 山东";
+theProvs[32] = "S 山西";
+theProvs[33] = "S 陕西";
+theProvs[34] = "S 上海";
+theProvs[35] = "S 四川";
+theProvs[37] = "T 天津";
+theProvs[36] = "T 台湾";
+theProvs[38] = "X 西藏";
+theProvs[39] = "X 香港";
+theProvs[40] = "X 新疆";
+theProvs[41] = "Y 云南";
+theProvs[42] = "Z 浙江";
+var timeout = "";
+var submitByEnterBtn = false;
+var searchInputTxt = "中文、拼音、电话区号  搜索城市/景点";
+function startSearch() {
+    if ($("#inputSearchCity").val().replace(/\?/, "") == "") {
+        $("#inputSearchCity").trigger("click");
+        return
+    }
+    if (submitByEnterBtn && !$("#inputSearchCity").autocomplete("widget").is(":visible")) {
+        $("#inputSearchCity").autocomplete("search", $("#inputSearchCity").val());
+        $("#searchResult").addClass("suggest-list-open");
+        $("#searchResult ul").show();
+        return false
+    }
+}
+function genColorPanel() {
+    var b = ['<ul class="clearfix">'];
+    for (i in pluginColors) {
+        var a = pluginColors[i];
+        b.push("<li><div class='getcolor' data-color='" + a + "' style='background-color:" + a + "'></div></li>")
+    }
+    b.push("</ul>");
+    return b.join("")
+}
+function fillCitySearchForm() {
+    var e = [12, 34, 37, 43, 10, 13, 14, 15, 16, 17, 18, 21, 19, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 38, 40, 41, 42, 39, 11, 36,];
+    var b = [];
+    for (i in e) {
+        var a = e[i];
+        matches = theProvs[a].match(/\s(.*)/);
+        var c = matches[1];
+        if (i == 3) {
+            b.push('<li><a href="#' + a + '">' + c + "</a>");
+            b.push('<li><a href="#"></a>')
+        } else {
+            b.push('<li><a href="#' + a + '">' + c + "</a>")
+        }
+    }
+    $("#searchProvinceList").html(b.join(""))
+}
+function loadTopBanner() {
+    try {
+        window.external.RCCoralGetItemCacheType();
+        var a = 1
+    } catch (b) {
+        var a = 0
+    }
+    //banner
+    //$.get("/public/banner.php", {ifCleverExplorer: a}, function (c) {
+    //    $("#mainContainer").prepend(c)
+    //})
+}
+function aqiGuide(a) {
+    aqiGuides = {
+        "1": "出去散散步，呼吸一下新鲜空气吧！好风好景一定不要辜负哦~",
+        "2": "可以四处走走放松心情，感受大自然的美好哦~",
+        "3": "参加室外活动时记得戴口罩，敏感的朋友还得多注意防护哦~",
+        "4": "在室外活动时一定要戴口罩，对于敏感的朋友来说则尽量不要出门啦~",
+        "5": "为了健康着想，各位朋友尽量减少外出吧，即使出门也要记得戴口罩哦~",
+        "6": "雾霾漫天，各位朋友还是在家呆着吧！这种天气出门，红绿灯都看不见呢~",
+        "7": "雾霾漫天，各位朋友还是在家呆着吧！这种天气出门，红绿灯都看不见呢~"
+    };
+    if (typeof(aqiGuides[a]) != "undefined") {
+        return aqiGuides[a]
+    } else {
+        return "暂无"
+    }
+}
+function aqiPercent(a) {
+    if (a <= 200) {
+        aqiPercent = a / 4
+    } else {
+        if (a <= 300) {
+            aqiPercent = 50 + (a - 200) / 4.78
+        } else {
+            if (a <= 500) {
+                aqiPercent = 70.915 + (a - 300) / 6.876
+            } else {
+                if (a <= 550) {
+                    aqiPercent = 103
+                } else {
+                    aqiPercent = 104
+                }
+            }
+        }
+    }
+    return aqiPercent
+}
+function reflow() {
+    var a = document.body;
+    a.style.zoom = a.style.zoom == "1" ? "100%" : "1"
+}
+function redirectIfMobile(b) {
+    if (/vmod=pc/.test(window.location)) {
+        document.cookie = "vmod=pc;path=/"
+    }
+    if (!/vmod=pc/.test(document.cookie)) {
+        var a = navigator.userAgent.toLowerCase();
+        if (/(iphone|ipod|android|nokia|sony|ericsson|mot|htc|samsung|sgh|lg|philips|lenovo|ucweb|opera mobi|windows mobile|blackberry)/i.test(a) || a == "") {
+            location.href = b
+        }
+        if (/ipad/.test(a)) {
+            allCount("ipad_waptianqi");
+            location.href = b
+        }
+    }
+}
+function hidePoplayer() {
+    $(".pop-layer").hide();
+    $(".arrow").removeClass("uarr");
+    $(".pm-info").removeClass("cur");
+    $(".suggest-list").removeClass("suggest-list-open");
+    $(".select-city").removeClass("select-city-hover")
+    $('.tShow-more-box').addClass("hidden");
+    $('.tShow-more-add').css({"background":"url("+_url_res+"images/icon/tShowMore.png) right bottom no-repeat"});
+}
+function gotoMyHref(a) {
+    window.location.href = a.attr("href")
+}
+function blanktoHref(a) {
+    window.open(a.attr("href"))
+}
+function mytoggleLayer(a, c, b) {
+    hidePoplayer();
+    if (a) {
+        c.hide();
+        b.removeClass("uarr").removeClass("select-city-hover")
+    } else {
+        c.show();
+        b.addClass("uarr").addClass("select-city-hover")
+    }
+}
+function relCityToggleLayer(a, c, b) {
+    hidePoplayer();
+    if (a) {
+        c.css({"background":"url("+_url_res+"images/icon/tShowMore.png) right bottom no-repeat"});
+        b.addClass("hidden");
+    } else {
+        c.css({"background":"url("+_url_res+"images/icon/tShowMoreUp.png) right bottom no-repeat"});
+        b.removeClass("hidden");
+    }
+}
+function indexPageWeaCallback(f) {
+    var a = nightTxt1 = f.day1.weather;
+    $("#dayIcon").addClass("w" + f.day1.img + "_l");
+    $("#nightIcon").addClass("w" + f.day1.imgNight + "_l wnt");
+    if (f.day1.weather.indexOf("转") > -1) {
+        var e = f.day1.weather.split("转");
+        a = e[0];
+        nightTxt1 = e[1]
+    }
+    $("#dayTxt").html(a);
+    $("#nightTxt").html(nightTxt1);
+    $("#lowT").html(f.day1.tempLow + "℃");
+    $("#highT").html(f.day1.tempHigh + "℃");
+    $("#wind").html(f.day1.wind);
+    $("#tomorrowLowT").html(f.day2.tempLow + "℃");
+    $("#tomorrowIcon").addClass("w" + f.day2.img);
+    $("#tomorrowTxt").html(f.day2.weather);
+    $("#tomorrowHighT").html(f.day2.tempHigh + "℃");
+    if (f.showDetail == "yes") {
+        $("#todayHref").attr("href", "/today-" + f.id + ".htm");
+        $("#tomorrowHref").attr("href", "/tomorrow-" + f.id + ".htm")
+    } else {
+        $("#todayHref").attr("href", "/" + f.pinyin + "/" + f.id + ".htm");
+        $("#tomorrowHref").attr("href", "/" + f.pinyin + "/" + f.id + ".htm")
+    }
+    if (f.dayType == 15) {
+        var b = "15"
+    } else {
+        var b = "7"
+    }
+    $("#localHref").attr("href", "/" + f.pinyin + "/" + f.id + ".htm").html("查看" + b + "日天气预报&raquo;");
+    if ($("html").hasClass("ie6")) {
+        $(".days2 .today").hoverfix();
+        $(".days2 .tomorrow").hoverfix()
+    }
+    $("#weaInfoAqi").attr("href", "/air-" + f.id + ".htm");
+    $("#weaHistory").attr("href", "/wea_history/" + f.id + ".htm");
+    $("#placeHolder").hide();
+    var c = typeof(f.cityNameWithSuffix) == "undefined" ? f.city : f.cityNameWithSuffix;
+    $("#weatherInfo").show().find("h2").html(c + "天气预报")
+}
+function countDays() {
+    var m = ["一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    var q = new Date();
+    var k = q.getMonth();
+    if (k < 4) {
+        var l = q.getFullYear();
+        var f = l.toString();
+        var j = f.substr(2, 2) - 1;
+        var o = parseInt((j * 0.2422 + 21.94) - parseInt(j / 4));
+        var c = new Date(l, 0, 1, 0, 0, 0);
+        var p = parseInt((q.getTime() - c.getTime()) / 86400000);
+        var b = 31 - o;
+        var e = b + p + 1;
+        var a = parseInt(e / 9);
+        var h = e % 9;
+        if (a > 9) {
+            return ""
+        } else {
+            return "(" + m[a] + "九第" + m[h] + "天)"
+        }
+    } else {
+        if (k >= 12) {
+            var l = q.getFullYear();
+            var f = l.toString();
+            var j = f.substr(2, 2);
+            var o = parseInt((j * 0.2422 + 21.94) - parseInt(j / 4));
+            var n = q.getDate();
+            if (n > o) {
+                var g = n - o + 1;
+                var a = parseInt(g / 9) + 1;
+                var h = g % 9;
+                return "(" + m[a] + "九第" + m[h] + "天)"
+            }
+            return ""
+        }
+    }
+}
+function bindInitEvent() {
+    $(document).click(function (a) {
+        hidePoplayer()
+    });
+
+    $("#province a").click(function () {
+        if (match = $(this).attr("href").match(/#(\d+)/)) {
+            provId = match[1];
+            cities = getCitiesByProvId(provId);
+            displaySearchDiv(cities, "city", provId, $(this).html());
+            currentSelectProvinceName = $(this).html();
+            bindCitySelect();
+            bindCountySelect()
+        }
+    });
+    ipJudgeError()
+}
+function bindCountySelect() {
+    $("#county").find("a").unbind().click(function () {
+        if (/返回全国/.test($(this).html())) {
+            $("#province").show();
+            $("#city").hide();
+            $("#county").hide()
+        } else {
+            if (/返回/.test($(this).html())) {
+                $("#province").hide();
+                $("#city").show();
+                $("#county").hide()
+            } else {
+                gotoMyHref($(this))
+            }
+        }
+    })
+}
+function bindCitySelect() {
+    $("#city").find("a").unbind().click(function () {
+        if (match = $(this).attr("href").match(/#(\d+),(\d+)/)) {
+            provId = match[1];
+            cityIndex = match[2];
+            counties = getCountiesByProvCity(provId, cityIndex);
+            displaySearchDiv(counties, "county", provId, $(this).html());
+            bindCountySelect()
+        } else {
+            if (/返回全国/.test($(this).html())) {
+                $("#province").show();
+                $("#city").hide();
+                $("#county").hide()
+            }
+        }
+    })
+}
+function addFav(f) {
+    if (!f) {
+        var f = "天气预报"
+    } else {
+        f = f + "--天气预报"
+    }
+    var a = location.href + "?shoucang";
+    var b = navigator.userAgent.toLowerCase();
+    var g = "您可以尝试通过快捷键 Ctrl+D 加入到收藏夹";
+    if (b.indexOf("360se") > -1 || b.indexOf("lbbrowser") > -1 || b.indexOf("firefox") > -1 || b.indexOf("chrome") > -1) {
+        alert(g)
+    } else {
+        if (b.indexOf("msie 8") > -1) {
+            window.external.AddToFavoritesBar(a, f)
+        } else {
+            if (document.all) {
+                try {
+                    window.external.addFavorite(a, f)
+                } catch (c) {
+                    alert(g)
+                }
+            } else {
+                if (window.sidebar) {
+                    window.sidebar.addPanel(f, a, "")
+                } else {
+                    alert(g)
+                }
+            }
+        }
+    }
+}
+function allCount(e) {
+    return true
+}
+
+function _link_click(e,ele) {
+    var targetNode = "";
+    if(ele){
+        targetNode = ele;
+    }else{
+        targetNode = e.target || e.srcElement;
+    }
+    var suffix=$(targetNode).attr('suffix');
+    var curUrl=location.href;
+
+    var href = $(targetNode).attr('href');
+    //location.href=openUrl;
+    var openUrl =  href + '?' + suffix + '&qid=' + getQueryString('qid');
+    $(targetNode).attr('href', openUrl);
+    return true;
+}
+function deleteCookie(a) {
+    var c = new Date();
+    c.setTime(c.getTime() - 1);
+    var b = 0;
+    document.cookie = a + "=" + b + "; expires=" + c.toGMTString()
+}
+function getCookie(c) {
+    var a;
+    var f = document.cookie;
+    var e = f.indexOf(c + "=");
+    if (e > -1) {
+        start = f.indexOf("=", e) + 1;
+        var b = f.indexOf(";", start);
+        if (b == -1) {
+            b = f.length
+        }
+        a = f.substring(start, b)
+    }
+    return a
+}
+function setCookie(c, f, b, g) {
+    var a = "";
+    if (typeof(b) != "undefined" && b > 0) {
+        var e = new Date();
+        e.setTime(e.getTime() + Number(b) * 3600 * 1000);
+        a = "expires = " + e.toGMTString()
+    }
+    if (typeof(g) != "undefined" && g !="") {
+        domainVal = ";domain=" + g
+    } else {
+        domainVal = ""
+    }
+    document.cookie = c + "=" + f + "; path=/;" + a + domainVal
+}
+function cancelEvent(a) {
+    if (a && a.stopPropagation) {
+        a.stopPropagation()
+    } else {
+        window.event.cancelBubble = true
+    }
+}
+function displaySearchDiv(c, f, b, e) {
+    $("#province").hide();
+    $("#city").hide();
+    $("#county").hide();
+    var a = [];
+    if (f == "city" && c.length == 1) {
+        currentSelectProvinceName = "全国";
+        c = getCountiesByProvCity(b, 0);
+        displaySearchDiv(c, "county", b, e)
+    } else {
+        var cityIndex=0;
+        if (f == "city" && c.length > 1) {
+            a.push("<h3 class='btitle'>" + e + "主要城市<a href='#' class='back'><< 返回全国</a></h3>");
+            a.push("<div class='meta'>");
+            for (i in c) {
+                cityIndex=cityIndex+1;
+                match = c[i].match(/\s(.+?)-/);
+                a.push("<li><a suffix='btype=index&subtype=search&idx="+cityIndex+"' onclick='return _link_click(event);' href='#" + b + "," + i + "'>" + match[1] + "</a></li>")
+            }
+            a.push("</div>");
+            $("#city").html(a.join(""));
+            $("#city").show()
+        } else {
+            if (f == "county") {
+                a.push("<h3 class='btitle'>" + e + "地区<a href='#' class='back'><< 返回" + currentSelectProvinceName + "</a></h3>");
+                a.push("<div class='meta'>");
+                for (i in c) {
+                    cityIndex=cityIndex+1;
+                    match = c[i].match(/^(a?\d+)-.\s(.+?)=(.+?)-/);
+                    // console.log(match);
+                    a.push("<li><a suffix='btype=index&subtype=search&idx="+cityIndex+"' onclick='return _link_click(event);' href='/" + match[3] + '/'  + match[1] + ".html'>" + match[2] + "</a></li>")
+                }
+                a.push("</div>");
+                $("#county").html(a.join(""));
+                $("#county").show()
+            }
+        }
+    }
+}
+function getCitiesByProvId(a) {
+    citiesStr = prov[a];
+    if (citiesStr.indexOf("|") < 0) {
+        var b = [citiesStr]
+    } else {
+        var b = citiesStr.split("|")
+    }
+    return b
+}
+function getCountiesByProvCity(b, a) {
+    var c = provqx[b][a];
+    return c.split("|")
+}
+function ipJudgeError() {
+    if (getCookie("defaultCityID") == "" || getCookie("defaultCityID") == "undefined" || getCookie("defaultCityID") == null) {
+        // $("#defaultCity").attr("src", "/t/detect2009v2_defaultCiyt.php")
+    } else {
+        var a = getCookie("defaultCityName");
+        $("#ipCheckError").html("更正您的地理位置");
+        $("#ipCheckError").attr("href", "/tianqifk/index.htm")
+    }
+}
+function defaultCityCallBack(b, a) {
+    setCookie("defaultCityID", b, 24 * 365);
+    setCookie("defaultCityName", escape(a), 24 * 365);
+    $("#ipCheckError").html("IP判断错误反馈:我不在" + a);
+    $("#ipCheckError").attr("href", "/tianqifk/index.htm")
+}
+function parseQueryStrToJson(e) {
+    var c = e.replace(/\?/, "").split("&");
+    var a = {};
+    for (i in c) {
+        if (typeof(c[i]) != "string") {
+            continue
+        }
+        var b = c[i].split("=");
+        a[b[0]] = b[1]
+    }
+    return a
+}
+function judgeDayNightStr(b, a) {
+    if (hour >= 18) {
+        document.write(a)
+    } else {
+        document.write(b)
+    }
+}
+function todayFutureTempWidget() {
+    var a = new dhtmlXChart({
+        view: "line",
+        container: "todayFutureTemp",
+        value: "#wenduB#",
+        label: "#curB##wenduB#",
+        tooltip: {template: "#curB##wenduB#"},
+        item: {borderColor: "#ff8f21", color: "#ff8f21"},
+        line: {color: "#ff8f21", width: 3},
+        padding: {left: 0, bottom: 20, right: 0}
+    });
+    a.addSeries({
+        value: "#wenduH#",
+        label: "#curH##wenduH#",
+        tooltip: {template: "#curH##wenduH#"},
+        item: {borderColor: "#66d53f", color: "#66d53f"},
+        line: {color: "#66d53f", width: 3}
+    });
+    a.parse(data, "json")
+}
+function todayInterFuture() {
+    var a = new dhtmlXChart({
+        view: "line",
+        container: "todayFutureTemp2",
+        value: "#wenduB#",
+        label: "<div class='data-up'>#curB##wenduB#℃</div>",
+        tooltip: {template: "#curB##wenduB#"},
+        item: {borderColor: "#ff8f21", color: "#ff8f21"},
+        line: {color: "#ff8f21", width: 2},
+        padding: {left: 0, bottom: 20, right: 0}
+    });
+    a.addSeries({
+        value: "#wenduH#",
+        label: "<div class='data-dn'>#curH##wenduH#℃</div>",
+        tooltip: {template: "#curH##wenduH#"},
+        item: {borderColor: "#268dea", color: "#268dea"},
+        line: {color: "#268dea", width: 2}
+    });
+    a.parse(data, "json")
+}
+function chartHisTempData() {
+    var a = new dhtmlXChart({
+        view: "line",
+        container: "hisTemp",
+        value: "#wenduB#",
+        label: function (b) {
+            if (b.curB != "") {
+                return "<div class='data-up data-up-cur'>" + b.curB + b.wenduB + "℃</div>"
+            } else {
+                return "<div class='data-up'>" + b.curB + b.wenduB + "℃</div>"
+            }
+        },
+        item: {borderColor: "#ff8f21", color: "#ff8f21"},
+        line: {color: "#ff8f21", width: 2},
+        origin: "auto",
+        padding: {top: 15, left: 35},
+        xAxis: {
+            template: function (b) {
+                if (b.curB != "") {
+                    return "<b>" + b.month + "</b>"
+                } else {
+                    return b.month
+                }
+            }, color: "#f7f7f7", lineColor: "#f7f7f7"
+        },
+        yAxis: {
+            start: dataHisSection[1], step: dataHisSection[2], end: dataHisSection[0], template: function (b) {
+                return b + "℃"
+            }, color: "#f7f7f7", lineColor: "#f7f7f7"
+        }
+    });
+    a.addSeries({
+        value: "#wenduH#", label: function (b) {
+            if (b.curB != "") {
+                return "<div class='data-dn data-dn-cur'>" + b.curH + b.wenduH + "℃</div>"
+            } else {
+                return "<div class='data-dn'>" + b.curH + b.wenduH + "℃</div>"
+            }
+        }, item: {borderColor: "#268dea", color: "#268dea"}, line: {color: "#268dea", width: 2}
+    });
+    $("#hisTemp").css({width: "980px", height: "218px"});
+    a.parse(dataHisTemp, "json")
+}
+function todayHourWidget() {
+    var c = new Date();
+    var a = c.getHours();
+    html = "";
+    for (i = 0; i < 24; i++) {
+        var b = "";
+        if (i <= 5 || i >= 19) {
+            b = "wnt_l"
+        }
+        html += "<li" + (i == a ? ' class="current"' : "") + '><div class="hd">' + wea_h_hour[i]["hour"] + '点</div><div class="bd"><p class="f_ico"><span class="wea_l w' + wea_h_hour[i]["icon"] + "_l " + b + '"></span></p><p class="f_wz">' + wea_h_hour[i]["tq"] + '</p></div><div class="ft">' + wea_h_hour[i]["temp"] + "℃</div></li>"
+    }
+    $("#wea_hour ul").html(html);
+    hour24Slide()
+}
+function todayHourWidgetInter(e) {
+    var c = new Date();
+    var a = c.getHours() + e - 8;
+    html = "";
+    for (i = 0; i < wea_h_hour.length; i++) {
+        var b = "";
+        if (wea_h_hour[i]["hour"] <= 5 || wea_h_hour[i]["hour"] >= 19) {
+            b = "wnt_l"
+        }
+        html += "<li" + ((wea_h_hour[i]["hour"] == a && i < 21) ? ' class="current"' : "") + '><div class="hd">' + wea_h_hour[i]["hour"] + '点</div><div class="bd"><p class="f_ico"><span class="wea_l w' + wea_h_hour[i]["icon"] + "_l " + b + '"></span></p><p class="f_wz">' + wea_h_hour[i]["tq"] + '</p></div><div class="ft">' + wea_h_hour[i]["temp"] + "℃</div></li>"
+    }
+    $("#wea_hour ul").html(html);
+    hour24SlideInter()
+}
+function todayHourWidgetDistrict() {
+    if (typeof(wea_h_hour) == "undefined") {
+        return
+    }
+    var e = new Date();
+    var a = wea_h_hour[0]["hour"] > e.getHours() ? wea_h_hour[0]["hour"] : e.getHours();
+    html = "";
+    for (i = 0; i < wea_h_hour.length; i++) {
+        var c = "";
+        var b = wea_h_hour[i]["hour"];
+        if (b <= 5 || b >= 19) {
+            c = "wnt_l"
+        }
+        html += "<li" + (a == b ? ' class="current"' : "") + '><div class="hd">' + wea_h_hour[i]["hour"] + '点</div><div class="bd"><p class="f_ico"><span class="wea_l w' + wea_h_hour[i]["icon"] + "_l " + c + '"></span></p><p class="f_wz">' + wea_h_hour[i]["tq"] + '</p></div><div class="ft">' + wea_h_hour[i]["temp"] + "℃</div></li>"
+    }
+    $("#wea_hour ul").html(html);
+    hour24Slide()
+}
+function airTrend(a) {
+    $("#chartHour").hide();
+    $("#chartDay").hide();
+    if (a == "hour") {
+        $("#24hours").addClass("mt_curr");
+        $("#30days").removeClass("mt_curr");
+        $("#chartHour").show()
+    } else {
+        $("#24hours").removeClass("mt_curr");
+        $("#30days").addClass("mt_curr");
+        $("#chartDay").show()
+    }
+    if (a == "hour" && $("#chartHour").html() != "") {
+        return
+    }
+    if (a == "day" && $("#chartDay").html() != "") {
+        return
+    }
+    var b = new dhtmlXChart({
+        view: "line",
+        container: a == "hour" ? "chartHour" : "chartDay",
+        value: "#point#",
+        label: "#aqi#",
+        item: {borderColor: "#268dea", color: "#ffffff", radius: 3},
+        line: {
+            color: function (c) {
+                if (c.aqi <= 50) {
+                    return "#6FBE09"
+                } else {
+                    if (c.aqi <= 100) {
+                        return "#FBD12A"
+                    } else {
+                        if (c.aqi <= 150) {
+                            return "#FFA641"
+                        } else {
+                            if (c.aqi <= 200) {
+                                return "#EB5B13"
+                            } else {
+                                if (c.aqi <= 300) {
+                                    return "#960453"
+                                } else {
+                                    return "#580422"
+                                }
+                            }
+                        }
+                    }
+                }
+            }, width: 3
+        },
+        xAxis: {template: "#label#", color: "#d9d9d9", lineColor: "#d9d9d9"},
+        yAxis: {
+            color: "#d9d9d9", start: 0, step: 1666, end: 9996, template: function (e) {
+                var c = [0, 50, 100, 150, 200, 300, 500];
+                return c[e / 1666]
+            }
+        },
+        padding: {left: 35, bottom: 75},
+        origin: 0,
+        preset: "simple"
+    });
+    if (a == "hour") {
+        $("#chartHour").css("height", "300px").show();
+        b.parse(hours24, "json")
+    } else {
+        $("#chartDay").css("height", "300px").show();
+        b.parse(days30, "json")
+    }
+}
+function publishTime() {
+    var c = new Date();
+    var a = c.getHours();
+    var b = c.getFullYear() + "-" + (c.getMonth() - 1 + 2) + "-" + c.getDate();
+    if (a >= 0 && a < 8) {
+        c.setDate(c.getDate() - 1);
+        b = c.getFullYear() + "-" + (c.getMonth() - 1 + 2) + "-" + c.getDate() + " 18:00"
+    } else {
+        if (a >= 8 && a < 12) {
+            b += " 08:00"
+        } else {
+            if (a >= 12 && a < 18) {
+                b += " 12:00"
+            } else {
+                b += " 18:00"
+            }
+        }
+    }
+}
+
+//收藏网址到浏览器书签
+function addfavorite() 
+{
+    var win=window;
+    var url=win.location.href;
+    var pageTitle=$("title").text();
+    try {
+        if (win.sidebar) { 
+            win.sidebar.addPanel(pageTitle, url, ""); 
+        }
+        else if (
+            document.all.length) { 
+            if(navigator.userAgent.toLowerCase().indexOf("msie 8")>-1) 
+                external.AddToFavoritesBar(url,title,''); 
+            else win.external.addFavorite(url,pageTitle); 
+        }
+        else if (window.opera && window.print) { 
+            return true;
+        }
+    } catch (e) { 
+        alert("您的浏览器安全设置不允许该项操作,请使用Ctrl+D进行添加."); 
+    }
+} 
+function getIdByName(name){
+    for(var i in provqx){
+        for(var j in provqx[i]){
+            var tmp = provqx[i][j].split("|");
+            for(var k in tmp){
+                var cur_name = tmp[k].match(/ ([^=]+)/);
+                var cur_id = tmp[k].match(/(\d+)-/);
+                if(cur_name[1] == name){
+                    return cur_id[1];
+                }
+            }
+        }
+    }
+    return '';
+}
+
+function getQueryString( name )
+{
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if( r!=null ) return  unescape(r[2]); return null;
+}
+
+$(function () {
+    to_h5();
+    seedProvCityCountySelect('selectProvince', 'selectCity', 'selectCounty');
+});
+
+
+function is_mobile() {
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var m = {'iphone os' : /iphone os/i, 'midp' : /midp/i, 'v:1.2.3.4': /rv:1.2.3.4/i, 'ucweb': /ucweb/i,
+        'android' : /android/i, 'windows ce': /windows ce/i, 'windows mobile': /windows mobile/i};
+    for ( var i in m ) if ( sUserAgent.match(m[i]) == i ) return true;
+    return false;
+}
+function to_h5() {
+    if ( is_mobile() ){
+        var h5_url = $('link[rel=alternate]').attr('href');
+        if ( typeof(h5_url) != 'undefined' && h5_url.length > 0 ) {
+            window.location.replace( h5_url );
+        }
+    }
+}

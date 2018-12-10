@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京皮肤医院哪家好_北京京城皮肤医院</title>
+<meta name="keywords" content="北京皮肤医院哪家好" />
+<meta name="description" content="北京皮肤医院哪家好" />
+<link rel="stylesheet" href="/templets/default/style/global.css" />
+<link rel="stylesheet" type="text/css" href="/templets/default/style/style.css"/>
+<script src="/templets/default/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<!--[if IE 6]>
+<script src="/templets/default/js/png.js"></script>
+<script>
+DD_belatedPNG.fix('a,img,div,h1,ul,li');
+</script>
+<![endif]-->
+</head>
+<body>
+<!--公共头部 开始-->
+<div class="zy-top clear">
+	<div class="center">
+		<h1><a href="/"><img src="/templets/default/images/logo01.jpg" alt="" /></a></h1>
+		<ul>
+			<li>医保定点医院</li>
+			<li>三级皮肤病专科医院</li>
+			<li>JCI国际医疗认证医院</li>
+		</ul>
+		<div class="zy-top-r">
+			<p><span>健康热线：</span><strong>010-64888999</strong></p>
+		</div>
+	</div>
+</div>
+<!--首页导航-->
+<div class="zy-nav">
+	<ul class="center">
+		<li 193>
+			<a href="/">首页</a>
+		</li>
+		
+			<li>
+			<a href='/zjjc/' >医院概况</a>
+			</li>
+			<span></span>
+      	
+			<li>
+			<a href='/xw/' >医院动态</a>
+			</li>
+			<span></span>
+      	
+			<li>
+			<a href='/tsks/' >科室介绍</a>
+			</li>
+			<span></span>
+      	
+			<li>
+			<a href='/zj/' >京城名医</a>
+			</li>
+			<span></span>
+      	
+			<li>
+			<a href='/ft/' >专家访谈</a>
+			</li>
+			<span></span>
+      	
+			<li>
+			<a href='/zn/' >就医指南</a>
+			</li>
+			<span></span>
+      	
+			<li>
+			<a href='/yygh/' >预约挂号</a>
+			</li>
+			<span></span>
+      			
+	</ul>
+</div>
+<!--首页banner-->
+<div class="banner">
+	<div id="imgList">
+		<div class="imgList">
+            <!-- <a href="/xw/6278.shtml" target="_blank" style="display: block;"></a> -->
+            <a href="/swt/" target="_blank" style="display: block;"></a>
+            <a href="/xw/6304.shtml" target="_blank" class="bg02"></a> 
+		</div>
+	</div>
+	<div id="slides">
+		<a class="active2" href="javascript:void(0);"></a>
+		<a href="javascript:void(0);"></a>
+	</div>
+</div>
+<!--首页内容-->
+<div class="center">
+	<!--病种导航-->
+	<div class="bzNavBg mar12">
+		<div class="bz-part01">
+			<h2>非传染性皮肤病</h2>
+			<ul class="clear">
+				<li><a href="/npx/">银屑病</a></li>
+				<li><a href="/bdf/">白癜风</a></li>
+				<li><a href="/ylb/">鱼鳞病</a></li>
+				<li><a href="/xmz/">荨麻疹</a></li>
+				<li><a href="/py/">皮炎</a></li>
+				<li><a href="/sz/">湿疹</a></li>
+				<li><a href="/gm/">皮肤过敏</a></li>
+				<li><a href="/tf/">脱发</a></li>				
+				<li><a href="/sy/">皮肤瘙痒</a></li>
+				<li><a href="/jy/">鸡眼</a></li>
+				<li><a href="/gmxzd/">过敏性紫癜</a></li>
+				<li><a href="/mny/">毛囊炎</a></li>
+				<li><a href="/qt/">其他皮肤病</a></li>
+			</ul>
+		</div>
+		<div class="bz-part02">
+			<h2>传染性皮肤病</h2>
+			<ul class="clear">
+				<li><a href="/jc/">疥疮</a></li>
+				<li><a href="/hzj/">灰指甲</a></li>
+				<li><a href="/szx/">手足癣</a></li>
+				<li><a href="/tgx/">体股癣</a></li>
+				<li><a href="/bpy/">扁平疣 </a></li>
+				<li><a href="/jrsy/">尖锐湿疣</a></li>
+			</ul>
+		</div>
+		<div class="bz-part03">
+			<h2>皮肤美容</h2>
+			<ul class="clear">
+				<li><a href="/qcd/">青春痘</a></li>
+				<li><a href="/qb/">雀斑</a></li>
+				<li><a href="/hxs/">红血丝</a></li>
+				<li><a href="/bhgd/">瘢痕疙瘩</a></li>
+				<li><a href="/jzb/">酒糟鼻</a></li>
+				<li><a href="/ttz/">太田痣</a></li>
+				<li><a href="/hhb/">黄褐斑</a></li>
+				<li><a href="/tj/">胎记</a></li>
+				<li><a href="/cc/">痤疮</a></li>
+			</ul>
+		</div>
+	</div>	
+	<!--搜索-->
+	<div class="zy-search">
+		<h2>
+			热门搜索：
+			<a href="/qcd/">青春痘</a>
+			<a href="/npx/">银屑病</a>
+			<a href="/tf/">脱发</a>
+		</h2>		
+		<form id=search method=post name=SearchForm action=/plus/search.php target=_blank>
+			<INPUT id="z-text" onblur="if(this.value==''){this.value='请输入您要查询的疾病';this.style.color='#999';}" onfocus="if(this.value=='请输入您要查询的疾病'){this.value='';this.style.color='#000';}" name=keyword maxLength=15 value="请输入您要查询的疾病" size=180 style=" color:#c1b6a9;">
+			<input type="submit" id="z-btn" value="搜索" />
+		</form>
+		<a href="javascript:void(0);" onclick="online();return false;"  target="_blank"  class="zixun01">在线咨询</a>
+	</div>
+<!--公共头部 结束-->		
+<div class="zy-article clear mar16">
+	<div class="center">
+		<div class="zy-article-l fl">
+			<div class="zy-article-l-t">
+				<h2>北京皮肤医院哪家好</h2>
+				<p class="laiyuan">来源：北京京城皮肤医院有限公司  &nbsp;&nbsp;&nbsp;&nbsp;  专家热线：<strong>010-64888999</strong></p>
+				<div class="zaixian clear">
+					<p class="zaixian-title fl">今<br />日<br />在<br />线<br />专<br />家</p>
+					<div class="zaixianDoc fl">
+						<img src="/templets/default/images/zxDocImg01.jpg"/>
+						<div class="zaixianDocM fl">
+							<h4>王家璧</h4>
+							<p>擅长皮肤病理诊断、皮肤激光治疗、性传播疾病诊治及疑难皮肤性病诊治...<a href="/zj/12.shtml">[详细]</a></p>
+							<div class="zx-btn">
+								<a href="javascript:void(0);" onClick="online();return false;"  target="_blank">点击挂号</a>
+								<a href="javascript:void(0);" onClick="online();return false;"  target="_blank"  class="btn-yellow">在线预约</a>
+							</div>
+						</div>
+						<div class="zaixianDocR fl">
+							<div class="zaixianDocRt">
+								<p>专家议定每日限约<strong> 60 </strong>人</p>
+								<p>今日已约人数：<span>52 </span>剩余<i> 8</i></p>
+							</div>							
+						</div>
+					</div>
+				</div>				
+				<div class="con_news">
+					<p>
+	　　皮肤病是严重影响患者的健康，皮肤病是常见病、多发病之一，如麻风、疥疮、真菌病、皮肤细菌感染等。皮肤病是皮肤(包括毛发和甲)受到内外因素的影响后，其形态、结构和功能均发生变化，产生病理过程，并相应的产生各种临床先后表现。皮肤病的发病率很高，多比较轻，常不影响健康，但少数较重甚至可以危及生命那么，北京皮肤医院哪家比较好? <strong><a href="/swt/"><span style="color:#0000cd;">&gt;&gt;点击提交个人病情情况，在线免费获取治疗建议&lt;&lt;</span></a></strong></p>
+<div style="text-align: center;">
+	<img alt="" src="/uploads/allimg/180907/1-1PZG4321JN.jpg" style="width: 650px; height: 250px;" /></div>
+<p>
+	　　<span style="color:#0000ff;"><strong>1、</strong></span><span style="color: rgb(0, 0, 255);"><strong>诚信办院：</strong></span>北京京城皮肤医院已成为一所高层次的医疗机构， 是朝阳区疾病预防控制中心、北京医疗保险协会理事单位、北京市朝阳区皮肤病与性病临床医师培训基地，并为北京地区医疗、预防、教学、科研相结合的技术中心。</p>
+<p>
+	　　<span style="color:#0000ff;"><strong>2、专家技术：</strong></span>北京京城皮肤医院拥有多名代表皮肤病临床诊疗技术水平的主任医师、教授、博士生导师，专家组博采众长，不断开拓创新，研发出治疗带状疱疹的较佳诊疗&mdash;&mdash;中西医结合抗病毒综合诊疗。<strong><a href="/swt/"><span style="color: rgb(0, 0, 255);">&gt;&gt;您可结合病症与在线专家一对一交流，获取诊治方案&lt;&lt;</span></a></strong></p>
+<p style="text-align: center;">
+	<strong><a href="/swt/"><span style="color: rgb(0, 0, 255);"><img alt="" src="/uploads/allimg/170117/1-1F11G51203141.jpg" style="width: 384px; height: 80px;" /></span></a></strong></p>
+<p>
+	　　<span style="color:#0000ff;"><strong>3、**</strong></span><span style="color: rgb(0, 0, 255);"><strong>通道：</strong></span>北京京城皮肤医院为方便广大患者前来就诊，特别开通网上通道，患者通过网络可直接预约专家、到院直接就诊。凡是通过网络预约挂号的并来院就诊的皮肤病患者可节省排队等候的时间。</p>
+<p>
+	　　北京京城皮肤医院始终坚持&ldquo;以人为本、患者至上、诚信为重、科技为先&rdquo;的办院理念，融医学前沿性、医学经验性、医学人文性为一体，明确树立&ldquo;一切以病人为中心，一切以质量为核心&rdquo;的办院宗旨，建立了&ldquo;以研促教，以教促学，以学促医&rdquo;的医疗科研体系。<strong><a href="/swt/"><span style="color:#0000cd;"> </span></a><span style="font-size:14px;"><a href="/swt/" target="_blank"><span style="color:#0000cd;">&gt;&gt;点击查看更多信息</span></a></span><span style="color:#0000cd;"><span style="font-size:14px;"><a href="/swt/">&lt;&lt;</a></span></span></strong><br />
+	&nbsp;</p>
+<p>
+	<span style="font-size:18px;"><span style="color: rgb(255, 0, 0);"><strong>&nbsp;&nbsp; &nbsp;医保定点医院 医教一体 人才立院 科技兴院</strong></span>&nbsp;</span></p>
+<hr />
+<div>
+	　　北京京城皮肤医院**<span style="color: rgb(255, 0, 0);"><strong>医保定点医院</strong></span>，收费合理、花小钱治大病。北京京城皮肤医院处处以***的切身利益为重，在卫生监管部门及人民群众的监督下，严格按照物价部门的规定来制定收费标准。</div>
+<p>
+	　　北京京城皮肤医院组成员善于博采众长，广泛阅读中医典籍，善辩证论治，师古而不泥古，注重变通治疗，诊疗有创新，处方有特色。从传统中医总结出的病因、病理、调养方法等上乘智慧，与现代医疗技术相结合，综合治疗各种皮肤病，具有用药少，**快的治疗特色。</p>
+<p>
+	　　为保证诊疗品质，到北京京城皮肤医院的患者全部由<span style="color:#ff0000;"><strong>专家一对一亲自接诊</strong></span>，留足和患者的交流时间，我们的专家将会根据各位患者的实际情况来制定一个更好的治疗计划，并全程跟踪治疗，及时调整治疗方案，以保证**! &nbsp;<span style="font-size:14px;"><strong><a href="/swt/" target="_blank"><span style="color:#0000ff;">&gt;&gt;点击这里，与医生一对一交流&lt;&lt;</span></a></strong></span><br />
+	<br />
+	<span style="font-size:18px;"><span style="color: rgb(255, 0, 0);"><strong>&nbsp; &nbsp; &nbsp;北京京城</strong></span>&nbsp;<strong><span style="color: rgb(255, 0, 0);">康复案例</span></strong></span></p>
+<hr />
+<div>
+	　　患者信息：孟先生，今年38岁，患有皮肤瘙痒症两年多，一直求治无效，病情反复复发。</div>
+<p>
+	　　病情讲述：孟先生开始全身瘙痒，开始以为只是单纯的皮肤痒，没有在意。可是一连五天皮肤越痒越厉害，去当地一家诊所，医生说是换季皮肤瘙痒拿了点药膏涂抹。好了没有三天皮肤又开始痒了起来。两年时间内孟先生去过近十家医院，数十位医生，上百种药物。病情都是反反复复不得终了。孟先生通过网络了解北京京城皮肤医院治疗皮肤瘙痒。</p>
+<p>
+	　　来到医院后，专家给他做了详细的检查，制定了康复方案，治疗一周后，症状减轻身上皮疹和疤痕开始好转，一个疗程后，感觉不到皮肤瘙痒，皮损基本消失。巩固治疗一个疗程回访至今无复发。<a href="/swt/"><span style="color:#0000ff;"><span style="font-size: 14px;"><strong>&gt;&gt;点击查看，更多康复病例&lt;&lt;</strong></span></span></a><br />
+	&nbsp;</p>
+<p>
+	<strong style="color: rgb(255, 0, 0); font-size: 18px;">&nbsp; &nbsp; &nbsp;</strong><span style="font-size:18px;"><strong><span style="color:#ff0000;">康复见证致谢</span></strong></span></p>
+<hr />
+<p>
+	　　北京京城皮肤医院不断坚持着&ldquo;<span style="color: rgb(255, 0, 0);"><strong>以中医为基础、以西医为先导、以患者为中心、以专业塑**</strong></span>&rdquo;的经营理念，不断的引进高素质人才、*科技设备，在提供*标准的服务基础上，致力于打造皮肤病专业**。<a href="/swt/"><span style="color:#0000cd;"><span style="font-size:14px;"><strong>&gt;&gt;点击查看更多信息&lt;&lt;</strong></span></span></a></p>
+<p>
+	&nbsp;</p>
+<p>
+	<span style="font-size:18px;"><font color="#ff0000"><strong>&nbsp; &nbsp; &nbsp;京城皮肤医院 网上预约 方便就诊</strong></font></span></p>
+<hr />
+<p>
+	<strong><font color="#0000ff">&nbsp; &nbsp; &nbsp; &nbsp;【无假日皮肤病医院】 </font></strong></p>
+<p>
+	&nbsp; &nbsp; &nbsp; &nbsp; 北京京城皮肤医院是一家经严格审批的一所规范化、系统化、专业化的无假日皮肤病医院。医院一直奉行专科医院、特色诊室的发展思路，将诊疗中心作为特色科室，同时注重加强同多家医疗机构的交流与合作。</p>
+<p style="text-align: center;">
+	<img alt="" src="/uploads/allimg/170117/1-1F11G4510W35.jpg" style="width: 554px; height: 299px;" /></p>
+<p>
+	&nbsp; &nbsp; &nbsp; &nbsp; 2016年8月8日，JCI认证揭牌仪式暨新闻发布会在北京**会议中心隆重举行。北京京城皮肤医院，以高分通过认证，成为了率先通过JCI**认证的皮肤病专科医院。这标志着皮肤性病医疗服务与先进医疗管理体系全面接轨，将使皮肤性病医疗服务的规范化管理水平推向一个新的高度，对于皮肤性病医疗服务的**性、**性具有里程碑意义。北京京城皮肤医院2015年8月引入JCI评审的理念，到正式通过评审历时335天。目前，国内皮肤专科医院仅有北京京城皮肤医院通过JCI**医疗认证。<strong><a href="/swt/"><span style="color:#0000ff;"> &gt;&gt;点击了解更多关于JCI**医疗认证的信息&lt;&lt;</span></a></strong></p>
+<p>
+	<strong><font color="#0000ff">&nbsp; &nbsp; &nbsp; &nbsp;【在线挂号预约 方便就诊】</font></strong></p>
+<p>
+	&nbsp; &nbsp; &nbsp; &nbsp; 北京京城皮肤医院推出网上挂号系统，充分满足人们多方面需求，缓解现存的&ldquo;排长队，找医生难&rdquo;问题。</p>
+<p>
+	&nbsp; &nbsp; &nbsp; &nbsp; 网上预约挂号可享受：可享受优先就诊和**通道服务，更省时。</p>
+<p>
+	<span style="color:#0000ff;"><strong>&nbsp; &nbsp; &nbsp; &nbsp;特别提示：</strong></span>北京京城皮肤医院坚决维护患者隐私权，网上填写的所有资料只为预约提供方便，不作其他用途;网上挂号主要是为方便及时就诊，也方便医院及时安排针对您病情的医生。 <strong><a href="/swt/"><span style="color:#0000ff;">&gt;&gt;网上预约挂号,轻松方便&lt;&lt;</span></a></strong></p>
+<p align="center">
+	&nbsp; &nbsp;<a _fcksavedurl="tel:010 64888999" href="/swt/"><img alt="" src="/uploads/allimg/170117/1-1F11G4525L46.jpg" style="width: 286px; height: 80px;" /></a>&nbsp;<a href="http://tel:010 64888999"><img alt="" src="/uploads/allimg/170117/1-1F11G453121X.jpg" style="width: 286px; height: 80px;" /></a></p>
+<p>
+	<strong><font color="#ff0000">&nbsp; &nbsp; &nbsp; &nbsp;温馨提示：</font></strong>及早就医，及早康复。就医请选择正规、专业的医院，以免耽误您的病情。作为北京重点皮肤病诊疗机构，积极响应***，开通网上在线预约挂号系统，患者只要点击【<a _fcksavedurl="/swt/" href="http://cms.baidu.xiangyun120.com/swt/" target="_blank"><font color="#ff0000"><strong>在线挂号</strong></font></a>】或拨打<font color="#0000ff"><font color="#000000">挂号电话【<strong><font color="#ff0000">010-64888999</font></strong>】</font></font>只需短短30秒钟就可以轻松挂上医生号，而且省去了看病排队的繁琐。</p>
+
+				</div>				
+				<div class="fenxiang clear">
+					<!-- JiaThis Button BEGIN -->
+					<div class="jiathis_style fl" style="width:212px;text-align: left; font-size: 12px;">
+						<span class="jiathis_txt">分享到：</span>
+						<a class="jiathis_button_qzone"></a>
+						<a class="jiathis_button_tsina"></a>
+						<a class="jiathis_button_tqq"></a>
+						<a class="jiathis_button_renren"></a>
+						<a class="jiathis_button_kaixin001"></a>
+						<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+						<a class="jiathis_counter_style"></a>
+					</div>
+					<script type="text/javascript" >
+					var jiathis_config={
+						summary:"",
+						shortUrl:false,
+						hideMore:false
+					}
+					</script>
+					<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+					<!-- JiaThis Button END -->
+					<p>本文地址：<a href="http://baidu.pfxb120.com/qt/zl/4970.shtml">http://baidu.pfxb120.com/qt/zl/4970.shtml</a></p>
+				</div>
+				<ul>
+					<li>
+						<a href="javascript:void(0);" onClick="online();return false;"  target="_blank"><img src="/templets/default/images/articleImg01.jpg"/></a>
+					</li>
+					<li>
+						<a href="javascript:void(0);" onClick="online();return false;"  target="_blank"><img src="/templets/default/images/articleImg02.jpg"/></a>
+					</li>
+					<li>
+						<a href="javascript:void(0);" onClick="online();return false;"  target="_blank"><img src="/templets/default/images/articleImg03.jpg"/></a>
+					</li>
+				</ul>
+				<div class="article-link01">
+					<p>上一篇：<a href='/qt/zl/4622.shtml'>皮肤专科医院北京</a> </p>
+					<p>下一篇：<a href='/qt/zl/5055.shtml'>激光点痣</a> </p>
+				</div>
+			</div>
+			<div class="zy-article-l-b">
+				<div class="jc-logo fl">
+					<img src="/templets/default/images/jcLogo.jpg"/>
+					<p>北京京城皮肤医院</p>
+					<p><span>官方温馨提示</span></p>
+				</div>
+				<div class="fr">
+					<p>临床上皮肤病的治疗因人而异，患者不可仅凭文章自我诊断。具体诊疗请到正规医院，在医生指导下</p>
+					<p>进行！或花几分钟的时间咨询在线医生，在线医生会为您提供专业的诊疗意见和就医指导。</p>
+					<div class="fr-bottom clear">
+						<h2>官方电话：010-64888999</h2>
+						<div class="zz-btn">
+							<a href="javascript:void(0);" onClick="online();return false;"  target="_blank">在线咨询</a>
+							<a href="javascript:void(0);" onClick="online();return false;"  target="_blank"  class="yy">在线预约</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!--公共右侧 开始-->
+	<div class="zy-list-r fr">
+		<div class="fuchuang">
+			<ul>
+				<li>
+					<a href="javascript:void(0);" onclick="online();return false;"  target="_blank">
+						<img src="/templets/default/images/fuchuangIcon01.png"/>
+						<p>我<br />要<br />咨<br />询</p>
+					</a>
+				</li>
+				<li class="list-li01">
+					<a href="http://www.mypf110.com/yygh/" target="_blank">
+						<img src="/templets/default/images/fuchuangIcon02.png"/>
+						<p>自<br />助<br />挂<br />号</p>
+					</a>
+				</li>
+				<li class="list-li02">
+					<a href="javascript:void(0);" onclick="online();return false;"  target="_blank">
+						<img src="/templets/default/images/fuchuangIcon03.png"/>
+						<p>人<br />工<br />挂<br />号</p>
+					</a>
+				</li>
+				<li class="list-li03">
+					<a href="javascript:void(0);">
+						<img src="/templets/default/images/fuchuangIcon04.png"/>
+						<p>返<br />回<br />顶<br />部</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+		//滚动鼠标上司，漂浮窗跟着移动
+		window.onscroll = function(){
+			var scrollTop01 = document.body.scrollTop || document.documentElement.scrollTop;
+			if(scrollTop01>=780){
+				$('.fuchuang').css({'top':-790+scrollTop01});
+			}else{
+				$('.fuchuang').css({'top':0});
+			}
+		}
+		//返回顶部
+		$(".list-li03").click(function(){
+			$("body,html").animate({"scrollTop":0},600);
+		})
+		</script>
+		<div class="zy-gg-right">
+			<div class="zjjc">
+				<div class="zy-gg-right-title clear">
+					<div class="fl">
+						<img src="/templets/default/images/logo03.jpg"/>
+						<h2>走进京城</h2>
+					</div>
+				</div>
+				<div class="zjjc-cont">
+					 <a href="/zjjc/"><img src="/templets/default/images/yyImg02.jpg"/></a>
+					 <p class="yy-more">北京京城皮肤医院有限公司是按三级医院设置的，北京市皮肤病专科医院。设有皮肤内科、皮肤外科、中医科……<a href="/zjjc/">【详细】</a></p>
+					 <dl>
+						<dt><img src="/templets/default/images/hour24Icon02.jpg"/></dt>
+						<dd>
+							<h3>010-64888999</h3>
+							<p>24小时咨询热线</p>
+						</dd>
+					 </dl>
+					 <dl>
+						<dt><img src="/templets/default/images/clockIcon02.jpg"/></dt>
+						<dd>
+							<h3>8:00-17:00</h3>
+							<p>皮肤科专家无休坐诊</p>
+						</dd>
+					 </dl>
+					 <dl>
+						<dt><img src="/templets/default/images/mapIcon02.jpg"/></dt>
+						<dd class="list-dd03">
+							<h3>朝阳区北沙滩桥北双泉堡甲4号</h3>
+							<p>医院地址</p>
+						</dd>
+					 </dl>
+				</div>
+			 </div>
+			<div class="zy-help mar15">
+				<div class="zy-gg-right-title clear">
+					<div class="fl">
+						<img src="/templets/default/images/logo03.jpg"/>
+						<h2>我们可以帮您</h2>
+					</div>
+				</div>
+				<div class="zy-help-cont clear">
+					<ul>
+						<li>
+							<a href="javascript:void(0);" onclick="online();return false;"  target="_blank"><img src="/templets/default/images/rtIcon01.jpg"/>
+							<p>分析病情</p></a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" onclick="online();return false;"  target="_blank"><img src="/templets/default/images/rtIcon02.jpg"/>
+							<p>疑问解答</p></a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" onclick="online();return false;"  target="_blank"><img src="/templets/default/images/rtIcon03.jpg"/>
+							<p>预约专家</p></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="tjzj mar14">
+				<div class="zy-gg-right-title clear">
+					<div class="fl">
+						<img src="/templets/default/images/logo03.jpg"/>
+						<h2>推荐专家</h2>
+					</div>
+					<a href="/zj/" class="more-doc fr">更多 > </a>
+				</div>
+				<div class="tjzj-cont">
+					<ul class="clear">
+					<li><!--<li class="doc-line0">-->
+						<a href="/zj/31.shtml"><img src="/uploads/160902/1-160Z2141103360.jpg" height="135" width="105"/></a>
+						<div class="fr">
+							<h3><a href="/zj/31.shtml">吴大卫</a><span>主任医师 教授</span></h3>
+							<p>
+								1966年毕业于首都医科大学医疗系。从事皮肤科临床工作40余  
+								...
+								<a href="/zj/31.shtml">[详细]</a></p>
+							<div class="tjzj-cont-btn">
+								<a href="javascript:void(0);" onclick="online();return false;"  target="_blank">点击挂号</a>
+								<a href="javascript:void(0);" onclick="online();return false;"  target="_blank"  class="btn-yellow">在线预约</a>
+							</div>
+						</div>
+					</li>
+<li><!--<li class="doc-line0">-->
+						<a href="/zj/30.shtml"><img src="/uploads/160902/1-160Z21A459351.jpg" height="135" width="105"/></a>
+						<div class="fr">
+							<h3><a href="/zj/30.shtml">庄逢康</a><span>主任医师 教授</span></h3>
+							<p>
+								北京京城皮肤医院特需门诊专家，1959年毕业于北京医学院，北  
+								...
+								<a href="/zj/30.shtml">[详细]</a></p>
+							<div class="tjzj-cont-btn">
+								<a href="javascript:void(0);" onclick="online();return false;"  target="_blank">点击挂号</a>
+								<a href="javascript:void(0);" onclick="online();return false;"  target="_blank"  class="btn-yellow">在线预约</a>
+							</div>
+						</div>
+					</li>
+						
+					</ul>
+				</div>
+			</div>
+<div class="ghpt mar15">
+	<div class="zy-gg-right-title clear">
+		<div class="fl">
+			<img src="/templets/default/images/logo03.jpg"/>
+			<h2>官方挂号平台</h2>
+		</div> 
+	</div>
+	<form action="/plus/diy.php" enctype="multipart/form-data" method="post" class="clear">
+	<input type="hidden" name="action" value="post" />
+	<input type="hidden" name="diyid" value="1" />
+	<input type="hidden" name="do" value="2" />
+			<p>
+				<label>患者姓名：</label>
+				<input type="text" required name='xingming' id='xingming' placeholder="必填" />
+			</p>
+			<p>
+				<label>预约病种：</label>
+			<select name='bingzhong'>
+				<option value='银屑病'>银屑病</option>
+				<option value='白癜风'>白癜风</option>
+				<option value='鱼鳞病'>鱼鳞病</option>
+				<option value='青春痘'>青春痘</option>
+				<option value='灰指甲'>灰指甲</option>
+				<option value='脱发'>脱发</option>
+				<option value='其它疾病'>其它疾病</option>
+			</select>
+			</p>
+			<p>
+				<label>预约医生：</label>
+			<select name='yisheng'><option value='王家壁'>王家壁</option>
+				<option value='陈学荣'>陈学荣</option>
+				<option value='蔡有龄'>蔡有龄</option>
+				<option value='殷致宇'>殷致宇</option>
+				<option value='吴大卫'>吴大卫</option>
+				<option value='齐卿卓'>齐卿卓</option>
+				<option value='其他医生'>其他医生</option>
+			</select>
+			</p>
+			<p>
+				<label>联系电话：</label>
+				<input type='text' required name='dianhua' id='dianhua' class='intxt' value='' />
+			</p>
+			<p>
+				<label>预约时间：</label>
+				<input name="shijian" value="" type="text" id="shijian" class="intxt"  />
+				<script language="javascript" type="text/javascript">
+					Calendar.setup({
+						inputField     :    "shijian",
+						ifFormat       :    "%Y-%m-%d %H:%M",
+						showsTime      :    true,
+						timeFormat     :    "24"
+					});
+				 </script>
+			</p>
+			<input type="hidden" name="dede_fields" value="xingming,text;xingbie,radio;dianhua,text;nianling,text;bingzhong,select;yisheng,select;shijian,datetime;miaoshu,multitext" />
+<input type="hidden" name="dede_fieldshash" value="6098fbd58ba8a4f3ad4f728ea3a8cd93" />
+			<input type="submit" id="btn" value="加密提交信息" />
+		</form>
+</div>
+			<div class="txfw mar14">
+				<div class="zy-gg-right-title clear">
+					<div class="fl">
+						<img src="/templets/default/images/logo03.jpg"/>
+						<h2>贴心服务</h2>
+					</div> 
+				</div>
+				<div class="txfw-cont">
+					<ul>
+						<li>
+							<img src="/templets/default/images/rbIcon01.jpg"/>
+							<p><a>微笑服务</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon02.jpg"/>
+							<p><a>无线WIFI</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon03.jpg"/>
+							<p><a>免费停车</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon04.jpg"/>
+							<p><a>免费饮品</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon05.jpg"/>
+							<p><a>医疗顾问</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon06.jpg"/>
+							<p><a>一人一诊室</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon07.jpg"/>
+							<p><a>名医会诊</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon08.jpg"/>
+							<p><a>药品快递</a></p>
+						</li>
+						<li>
+							<img src="/templets/default/images/rbIcon09.jpg"/>
+							<p><a>银联服务</a></p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--公共右侧 开始-->		
+	</div>
+</div>
+<!--公共底部 开始-->
+</div>
+<div class="footerBg">
+	<div class="center">
+		<a href="/" class="logo02 fl"><img src="/templets/default/images/logo02.jpg"/></a>
+		<div class="footer-m">
+			<p>Copyright2012-2020 北京京城皮肤医院有限公司 版权所有</p>
+			<p>地址：北京市朝阳区北沙滩桥北双泉堡甲4号</p>
+			<p>全国健康热线:<strong>010-64888999</strong></p>
+			<p>本网站信息仅供参考，不能作为诊疗及医疗依据</p>
+			<p>版权所有(京)ICP备12048860号-10</p>
+			<p>网站声明：北京京城皮肤医院有限公司拥有*终解释权</p>
+		</div>
+		<ul>
+			<li>
+				<strong><img src="/templets/default/images/frIcon01.jpg" alt="" /></strong>
+				<span>无假日医院</span>
+			</li>
+			<li class="z-li03">
+				<strong><img src="/templets/default/images/frIcon02.jpg" alt="" /></strong>
+				<span>无线WiFi畅享</span>
+			</li>
+			<li class="z-li04">
+				<strong><img src="/templets/default/images/frIcon03.jpg" alt="" /></strong>
+				<span>舒适的环境</span>
+			</li>
+			<li>
+				<strong><img src="/templets/default/images/frIcon04.jpg" alt="" /></strong>
+				<span>便捷的交通</span>
+			</li>
+			<li class="z-li03">
+				<strong><img src="/templets/default/images/frIcon05.jpg" alt="" /></strong>
+				<span>在线咨询</span>
+			</li>
+			<li class="z-li04">
+				<strong><img src="/templets/default/images/frIcon06.jpg" alt="" /></strong>
+				<span>预约无需等待</span>
+			</li>
+		</ul>
+	</div>
+</div>
+<script src="/templets/default/js/youhua.js" type="text/javascript" charset="utf-8"></script>
+<script src="/templets/default/js/swt.js" type="text/javascript" charset="utf-8"></script>
+<script src="/templets/default/js/lxb.js" type="text/javascript" charset="utf-8"></script>
+<script src="/templets/default/js/index.js" type="text/javascript" charset="utf-8"></script>
+<!--公共底部 结束-->
+</body>
+</html>
