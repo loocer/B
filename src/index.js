@@ -10,14 +10,19 @@ Laya.stage.bgColor = "#ffffff";
 
 const chouMa = "res/atlas/3avatar.jpg"
 const sixPoker = "res/atlas/6-1.jpg"
+const skin = "res/atlas/input (2).png"
+const login = {}
 let pw = 250>>2
 let ph = 374>>2
+const skins = ["res/atlas/input (2).png"];
+
 Laya.loader.load(pokerBg,Laya.Handler.create(this,graphicsImg));
 Laya.loader.load(chouMa);
 Laya.loader.load(sixPoker);
-loginPanel()
+
 function onSpriteClick(val){
-    loginPanel()
+    createInput();
+    // loginPanel()
         // Laya.stage.removeChild(val.target);
     const obj = val.target
     const pff = new Laya.Sprite();
@@ -39,6 +44,9 @@ function onSpriteClick(val){
     showMyPoker();
     console.log(players)
     Laya.stage.destroyChildren()
+    Laya.stage.bgColor = "#232628";
+    Laya.loader.load(skins, Laya.Handler.create(this, onLoadComplete)); //加载资源。
+    
 }
 function graphicsImg(){
      for(let q=0;q<6;q++){
@@ -165,7 +173,68 @@ function loginPanel(){
 		button.name = Laya.Dialog.CLOSE;
 		button.pos(DIALOG_WIDTH - CLOSE_BTN_WIDTH - CLOSE_BTN_PADDING, CLOSE_BTN_PADDING);
 		dialog.addChild(button);
-
 		dialog.dragArea = "0,0," + DIALOG_WIDTH + "," + DIALOG_HEIGHT;
 		dialog.show();
+}
+
+function createInput(){
+	var ti = new Laya.TextInput();
+    ti.skin = skin;
+    ti.size(300, 50);
+    ti.sizeGrid = "0,40,0,40";
+    ti.font = "Arial";
+    ti.fontSize = 30;
+    ti.bold = true;
+    ti.color = "#606368";
+    ti.x = w>>2;
+    ti.y = h>>2;
+    Laya.stage.addChild(ti);
+}
+
+
+function onLoadComplete()
+{
+    for (var i = 0; i < skins.length; ++i)
+    {
+        var input = createInput(skins[i]);
+        input.prompt = 'Type:';
+        const xs = w>>1;
+        const ys = w>>1;
+        console.log(xs);
+        input.x = xs - 250;
+        input.y = ys - 50;
+    }
+}
+
+function createInput(skin)
+{
+    var ti = new Laya.TextInput();
+
+    ti.skin = skin;
+    ti.size(500, 100);
+    ti.sizeGrid = "0,40,0,40";
+    ti.font = "Arial";
+    ti.fontSize = 30;
+    ti.bold = true;
+    ti.color = "#606368";
+
+    Laya.stage.addChild(ti);
+    createButton(skin);
+    login.name = ti
+    return ti;
+}
+function createButton(skin){
+    const xs = w>>1;
+    const ys = w>>1;
+    var btn = new Laya.Button(skin);
+    btn.label="登陆"
+    btn.width = 500
+    btn.height = 80
+    btn.labelSize = 50
+    btn.pos( xs - 250, ys + 100);
+    btn.on(Laya.Event.CLICK, this,buttonClick);
+	Laya.stage.addChild(btn);
+}
+function buttonClick(){
+    console.log(login.name.text);
 }
