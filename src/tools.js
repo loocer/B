@@ -27,7 +27,6 @@ const PLAYERSPOSITION_FOUR = [
     [w>>1,200],
     [200,vh],
 ]
-const pokerBg = "res/atlas/poker_bg.png"
 const  randomNumBoth =(Min,Max)=>{
       var Range = Max - Min;
       var Rand = Math.random();
@@ -51,3 +50,5 @@ const getPositions=(psNum)=>{
         return PLAYERSPOSITION_FOUR
     }
 }
+const Adress = "http://localhost"
+const fontColor = "#ececec"
