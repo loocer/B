@@ -50,5 +50,5 @@ const getPositions=(psNum)=>{
         return PLAYERSPOSITION_FOUR
     }
 }
-const Adress = "http://localhost"
+const Adress = "api"
 const fontColor = "#ececec"

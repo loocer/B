@@ -7,9 +7,12 @@ class Player{
 		this.position = []
 		this.raiseMoney = 200
         this.pokerValue = []
+		this.pokers_ac = []
+		this.status_ac = null
 		this.raiseTotalMoney = 200
 	}
 	setPokerValue(val){
 		this.pokerValue = val
 	}
 }
+const players = []

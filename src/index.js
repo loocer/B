@@ -3,7 +3,7 @@ const acplays = [];
 //初始化舞台
 Laya.init(laya.utils.Browser.width,laya.utils.Browser.height,Laya.WebGL);
 // //背景颜色
-Laya.stage.bgColor = fontColor;
+Laya.stage.bgColor = '#fff';
 // // //创建缓动文本
 
 // Laya.stage.bgColor = "#ffffff";
