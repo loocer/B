@@ -22,7 +22,9 @@ function roomSocket(socket){
         // let roomts = Object.keys(socket.rooms);
         let returnMsg = gameObj(msgObj)
         console.log(returnMsg)
-  	    io.emit(rooms[i].id, returnMsg);
+        if(returnMsg){
+          io.emit(rooms[i].id, returnMsg);
+        }
   	  });
 
 	}

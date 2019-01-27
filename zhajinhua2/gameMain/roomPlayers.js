@@ -8,13 +8,19 @@ const acType = {
 	GAME_PASS : 'GAME_PASS',
 	GAME_PK : 'GAME_PK',
 	ON_RAISE: 'ON_RAISE',
-	ADD_RAISE: 'ADD_RAISE'
+	ADD_RAISE: 'ADD_RAISE',
+	GAME_OVER: 'GAME_OVER'
+}
+const stepType ={
+	BEGEN:'BEGEN',
+	DOING: 'DOING',
+	OVER: 'OVER'
 }
 class roomPlayers{
 	constructor({id,peopleNum}){
 		this.id = id
 		this.peopleNum = peopleNum
-		this.stepType = acType.ON_COME
+		this.stepType = acType.BEGEN
 		this.status = true
 		this.raiseMoney = 1
 		this.totalRaiseMoney = 0
@@ -22,6 +28,7 @@ class roomPlayers{
 		this.fireId = null
 		this.doingObj = {name:3}
 		this.sendObj = null
+		this.winObj = null
 		this.playIngs = []
 		this.players = []
 		this.pkObj = {}
@@ -84,10 +91,13 @@ class roomPlayers{
 			}
 		}
 	}
+	onStart(msgObj){
+		this.setPokersValue()
+		this.stepType = stepType.DOING
+	}
 	onReady(msgObj){
 		for(let p in this.players){
 			if(this.players[p].id ==msgObj.playerId){
-				this.players[p].isShow = true
 				this.players[p].state = acType.ON_READY
 				this.playIngs.push(this.players[p])
 			}
@@ -96,7 +106,6 @@ class roomPlayers{
 	onRaise(msgObj){
 		this._getNextDoingObj(msgObj)
 		for(let p = 0;p< this.players.length; p++){
-			console.log(this.players[p].id + '-----------' + msgObj.playerId)
 			if(this.players[p].id ==msgObj.playerId){
 				this.players[p].state = acType.ON_RAISE
 				this.players[p].raiseMoney = msgObj.raiseMoney
@@ -132,12 +141,15 @@ class roomPlayers{
 				this.players[p].state = acType.GAME_PASS
 			}
 		}
+		for(let i in this.playIngs){
+			if(this.playIngs[i].id ==msgObj.playerId){
+				this.playIngs.splice(i, 1);
+			}
+		}
 	}
 	onPk(msgObj){
-		let oPlayer = this._getPlayerById(msgObj.onePlayerId)
-		let tPlayer = this._getPlayerById(msgObj.twoPlayerId)
-		console.log(oPlayer)
-		console.log(tPlayer)
+		let oPlayer = this.getPlayerById(msgObj.onePlayerId)
+		let tPlayer = this.getPlayerById(msgObj.twoPlayerId)
 		let o={},t={}
 		o.player = oPlayer
 		t.player = tPlayer
@@ -155,7 +167,13 @@ class roomPlayers{
 	_setPkObj(o,p){
 		this.pkObj.winObj = o
 		this.pkObj.pasObj = p
-		p.state = acType.GAME_PASS
+		const oPlayer = this.getPlayerById(p.id)
+		oPlayer.state = acType.GAME_PASS
+		for(let i in this.playIngs){
+			if(this.playIngs[i].id ==p.id){
+				this.playIngs.splice(i, 1);
+			}
+		}
 	}
 	_getPokerValueType(valueArray){
 		let numArray = [Math.ceil(valueArray[0]/4),Math.ceil(valueArray[1]/4),Math.ceil(valueArray[2]/4)]
@@ -183,23 +201,15 @@ class roomPlayers{
 	_getNextDoingObj(msgObj){
 		for(let p in this.playIngs){
 			if(this.playIngs[p].id ==msgObj.playerId){
-				console.log(this.playIngs.length - 1)
-			console.log(p)
-			console.log(this.playIngs.length - 1==p)
-			console.log(this.playIngs[0])
 				if(this.playIngs.length - 1 == p){
 					this.doingObj = this.playIngs[0]
 				}else{
-					console.log('-----------------')
-					console.log(p+1)
-					console.log(this.playIngs)
-					console.log(this.playIngs[p+1])
 					this.doingObj = this.playIngs[~~p+1]
 				}
 			}
 		}
 	}
-	_getPlayerById(id){
+	getPlayerById(id){
 		for(let p in this.players){
 			if(this.players[p].id == id){
 				return this.players[p]

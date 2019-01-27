@@ -14,6 +14,7 @@ class player{
 		this.user = user
 		this.isMain = false
 		this.pokers_ac = []
+		this.isShow = false
 		this.isEnable = false
 		this.state = acType.ON_COME
 		this.posation = {x:0,y:0,z:0}

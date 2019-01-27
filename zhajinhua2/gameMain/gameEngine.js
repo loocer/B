@@ -1,21 +1,17 @@
 // var gameObj=require('./serverGameMain');
 var RoomPlayers = require('./roomPlayers');
 var rooms=require('./rooms');
+const check=require('./check');
+const constant=require('./constant');
+const acType = constant.acType
 var frontRoomPlayers = {}
-const acType = {
-	ON_COME : 'ON_COME',
-	ON_READY : 'ON_READY',
-	ON_START : 'ON_START',
-	SHOW_VALUE : 'SHOW_VALUE',
-	GAME_PASS : 'GAME_PASS',
-	GAME_PK : 'GAME_PK',
-	ON_RAISE: 'ON_RAISE',
-	ADD_RAISE: 'ADD_RAISE'
-}
 function main(msg){
 	for(let i in rooms){
 		if(rooms[i].id == msg.roomId){
 			let sendObj = null
+			if(!check(msg,rooms[i])){
+				return false;
+			}
 			rooms[i].getAcData(msg)
 			if(msg.acType === acType.ON_COME){
  				for(let p in rooms[i].players){
@@ -42,7 +38,7 @@ function main(msg){
 				frontRoomPlayers.acType = acType.ON_START
 	 			frontRoomPlayers.playerId = msg.playerId
 	 			if(rooms[i].players.length==rooms[i].playIngs.length){
-	 				rooms[i].setPokersValue()
+	 				rooms[i].onStart()
 	 				sendObj = {acType:acType.ON_START,allow:true,roomPlayers:rooms[i],backObj:frontRoomPlayers}
 	 			}else{
 	 				
@@ -70,17 +66,35 @@ function main(msg){
 	 			sendObj = {acType:acType.SHOW_VALUE,roomPlayers:rooms[i],backObj:frontRoomPlayers}
 	 		}
 	 		if(msg.acType === acType.GAME_PK){
-	 			frontRoomPlayers.acType = acType.GAME_PK
 	 			frontRoomPlayers.playerId = msg.playerId
 	 			frontRoomPlayers.raiseMoney = msg.raiseMoney
 	 			rooms[i].onPk(msg)
-	 			sendObj = {acType:acType.RAISE,roomPlayers:rooms[i],backObj:frontRoomPlayers}
+	 			const flag = rooms[i].playIngs.length
+	 			if(flag<2){
+	 				rooms[i].winObj = rooms[i].playIngs[0]
+	 				rooms[i].playIngs = []
+	 				frontRoomPlayers.acType = acType.GAME_OVER
+	 				const room = resetRoomPlayer(rooms[i])
+	 				sendObj = {acType:acType.GAME_OVER,roomPlayers:room,backObj:frontRoomPlayers}	 	
+	 			}else{
+	 				frontRoomPlayers.acType = acType.GAME_PK
+	 				sendObj = {acType:acType.GAME_PK,roomPlayers:rooms[i],backObj:frontRoomPlayers}	 				
+	 			}
 	 		}
 	 		if(msg.acType === acType.GAME_PASS){
-	 			frontRoomPlayers.acType = acType.GAME_PASS
 	 			frontRoomPlayers.playerId = msg.playerId
 	 			rooms[i].onPass(msg)
-	 			sendObj = {acType:acType.GAME_PASS,roomPlayers:rooms[i],backObj:frontRoomPlayers}
+	 			const flag = rooms[i].playIngs.length
+	 			if(flag<2){
+	 				rooms[i].winObj = rooms[i].playIngs[0]
+	 				rooms[i].playIngs = []
+	 				frontRoomPlayers.acType = acType.GAME_OVER
+	 				const room = resetRoomPlayer(rooms[i])
+	 				sendObj = {acType:acType.GAME_OVER,roomPlayers:room,backObj:frontRoomPlayers}	 	
+	 			}else{
+	 				frontRoomPlayers.acType = acType.GAME_PASS
+	 				sendObj = {acType:acType.GAME_PASS,roomPlayers:rooms[i],backObj:frontRoomPlayers}				
+	 			}
 	 		}
 	 		console.log(5555555555555)
 	 		console.log(sendObj)
@@ -88,5 +102,17 @@ function main(msg){
 	 		return sendObj
 		}
 	}
+}
+function resetRoomPlayer(roomPlayers){
+	for(let r in roomPlayers.players){
+		roomPlayers.players[r].state = acType.ON_COME
+		if(roomPlayers.fangzhu.id==roomPlayers.players[r].id){
+			roomPlayers.players[r].state = acType.ON_READY
+		}
+		roomPlayers.players[r].isShow = false
+	}
+	roomPlayers.doingObj = roomPlayers.players[0]
+	roomPlayers.stepType = 'BEGEN'
+	return roomPlayers;
 }
 module.exports=main

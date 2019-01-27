@@ -16,8 +16,9 @@ const Zhajinhua = {
     socket:null,
     tool:{},
     doing:{},
-    chip_ac:[],
     positions:{},
+    chipPositions:[],
+    pokerPositions:[],
     socketAddress:{},
     picList:[chouMa,sixPoker,pokerBg]
 }
@@ -72,50 +73,20 @@ Zhajinhua.network = function(url){
                 p= ps[i];
             }
         }
-        if(msg.backObj.acType === 'ON_COME'){
-            Zhajinhua.view(msg)
-        }
-        if(msg.backObj.acType === 'ON_READY'){
-            Zhajinhua.view(msg)
-        }
-        if(msg.backObj.acType === 'SHOW_VALUE'){
-            Zhajinhua.view(msg)
-            Zhajinhua.Draw.showValue(p)
-        }
+        Zhajinhua.view()
         if(msg.backObj.acType === 'ON_RAISE'){
-            Zhajinhua.view(msg)
             Zhajinhua.Draw.touzhu(p)
         }
         if(msg.backObj.acType === 'ON_START'){
-            Zhajinhua.view(msg)
             Zhajinhua.Draw.fapai()
-        }
-        if(msg.backObj.acType === 'GAME_PASS'){
-           Zhajinhua.Draw.onPass(msg)
-            Zhajinhua.view(msg)
-        }
-        if(msg.backObj.acType === 'GAME_PK'){
-            Zhajinhua.Draw.pkAc(msg)
-            Zhajinhua.view(msg)
-        }
-        if(msg.backObj.acType === 'GAME_OVER'){
-            Zhajinhua.tool.setDongPlers([])
-            Zhajinhua.view(msg)
-            Zhajinhua.Draw.over(msg)
         }
     })
     
 }
-Zhajinhua.reset = function(){
-    Zhajinhua.positions.pokerPositions = []
-    Zhajinhua.positions.chipPositions = []
-    Zhajinhua.positions.showPokerPositions = []
-    console.log(Zhajinhua.positions)
-}
 Zhajinhua.init = function(){
     Zhajinhua.positions.id = User.id
-    Zhajinhua.reset()
-    Laya.stage.destroyChildren()
+    Zhajinhua.positions.pokerPositions = []
+    Zhajinhua.positions.chipPositions = []
     msg = { 
         acType: 'ON_COME',
         roomId: Zhajinhua.roomInfo.roomNo,
@@ -123,6 +94,8 @@ Zhajinhua.init = function(){
         playerRoom:Zhajinhua.positions,
         raiseMoney:1
     }
+    console.log(Zhajinhua.roomInfo)
+    Laya.stage.destroyChildren()
     Laya.stage.bgColor = "#ffffff";
     // const positions = getPositions(peopleNum)
     // for(let i=0;i<peopleNum;i++){
@@ -142,14 +115,13 @@ Zhajinhua.graphicsImg = function(){
     }
     // Zhajinhua.view()
 }
-Zhajinhua.view = function(msg){
+Zhajinhua.view = function(){
     console.log('it is finish!')
     this.Draw.name()
     this.Draw.setStatus()
     this.Draw.setToolBar()
     this.Draw.setPoker()
     this.Draw.setChip()
-    this.Draw.setShowPoker(msg)
 }
 Zhajinhua.Event.createClick1 = function(){
     // tempScan = Laya.stage._childs.concat([])
@@ -162,9 +134,7 @@ Zhajinhua.Event.createClick1 = function(){
 }
 Zhajinhua.Event.createClick2 = function(){
     // const  players = Zhajinhua.playersiuSA4R3EEQ
-    // this.showValue(players[0])
-    msg.acType = 'SHOW_VALUE'
-    Zhajinhua.socket.emit(Zhajinhua.roomInfo.roomNo, msg);
+    this.showValue(players[0])
     //     console.log('ai2')
         // this.Draw.setPoker()
 }
@@ -180,7 +150,7 @@ Zhajinhua.Event.createClick4 = function(){
     var d = dialog({
         content: '点击你要pk的玩家头像，选择与他pk！'
     });
-    d.show();
+    d.showModal();
     setTimeout(function(){
         d.close().remove();
     },1000)
@@ -197,108 +167,37 @@ Zhajinhua.Event.createClick5 = function(){
     //     console.log('ai3')
         // this.Draw.setPoker()
 }
-Zhajinhua.Event.pass = function(){
-    msg.acType = 'GAME_PASS'
-    Zhajinhua.socket.emit(Zhajinhua.roomInfo.roomNo, msg);
-    // const  players = Zhajinhua.players
-    // this.touzhu(players[1])
-    //     console.log('ai3')
-        // this.Draw.setPoker()
-}
 Zhajinhua.Event.pk = function(a){
-    msg.onePlayerId = User.id
-    msg.twoPlayerId = a.target.id
-    console.log(a.target.id)
-    msg.acType = 'GAME_PK'
-    Zhajinhua.socket.emit(Zhajinhua.roomInfo.roomNo, msg);
+    console.log(a)
+    console.log(this)
+    // msg.acType = 'ON_READY'
+    // Zhajinhua.socket.emit(Zhajinhua.roomInfo.roomNo, msg);
     // const  players = Zhajinhua.players
     // this.touzhu(players[1])
     //     console.log('ai3')
         // this.Draw.setPoker()
 }
 Zhajinhua.Draw.showValue = function(player){
-    if(player.id ==User.id){
-        const my = player.pokers_ac
-        console.log(my);
-        const x = player.position[0] - 150;
-        for(let i in my){
-            my[i].graphics.clear();
-            const texture = Laya.loader.getRes(sixPoker);
-            my[i].graphics.drawTexture(texture);
-            my[i].scale(.5,.5);
-            my[i].size(texture.width, texture.height);
-            Laya.Tween.to(my[i],{x:x + 150*i,rotation:180},300,Laya.Ease.backOut,null,i*100);
-            Zhajinhua.positions.showPokerPositions.push({x:x + 150*i,y:my[i].y})
-        } 
-        const tempArray = []
-        for(let  i in Zhajinhua.positions.pokerPositions){
-            if(Zhajinhua.positions.pokerPositions[i].playerId !=player.id){
-                tempArray.push(Zhajinhua.positions.pokerPositions[i])
-            }
-        }
-        Zhajinhua.positions.pokerPositions = tempArray
-    }else{
-        const x = player.position[0] - 150;
-        const pok = player.pokers_ac
-        Laya.Tween.to(pok[0],{x:x+50,rotation:180},300,Laya.Ease.backOut,null,100);
-        Laya.Tween.to(pok[1],{x:x+100 ,rotation:180},300,Laya.Ease.backOut,null,200);
-        Laya.Tween.to(pok[2],{x:x+150,rotation:180},300,Laya.Ease.backOut,null,300);
-        let cont = 0
-        for(let  i in Zhajinhua.positions.pokerPositions){
-            if(Zhajinhua.positions.pokerPositions[i].playerId ==player.id){
-                if(cont==0){
-                    Zhajinhua.positions.pokerPositions[i].x=x+50
-                    Zhajinhua.positions.pokerPositions[i].r=180
-                }
-                if(cont==1){
-                    Zhajinhua.positions.pokerPositions[i].x=x+100
-                    Zhajinhua.positions.pokerPositions[i].r=180
-                }
-                if(cont==2){
-                    Zhajinhua.positions.pokerPositions[i].x=x+150
-                    Zhajinhua.positions.pokerPositions[i].r=180
-                }
-                cont++
-            }
-        }
-    }
-}
-Zhajinhua.Draw.over = function(msg){
-    const plers = Zhajinhua.players
-    const playIng = msg.roomPlayers.winObj
-    let passPlayer = null;
-    for(let  i in plers){
-        if(plers[i].id ==playIng.id){
-            passPlayer = plers[i]
-        }
-    }
-    const chips = Zhajinhua.chip_ac
-    for(let i in chips){
-        const r = randomNumBoth(0,360)
-         Laya.Tween.to(chips[i],
-            {scaleX:0,scaleY:0,x:passPlayer.position[0],y:passPlayer.position[1],pivotY:50,pivotX:50,rotation:r}
-            ,400,Laya.Ease.backOut,null,i*100);
-    }
-    const d = dialog({
-        content: `玩家${playIng.user.name}获胜！`
-    });
-    setTimeout(function(){
-        d.show();
-        Zhajinhua.reset()
-    },2000)
-    setTimeout(function(){
-        d.close().remove();
-    },2000)
+    const my = player.pokers_ac
+    console.log(my);
+    const x = player.position[0] - 150;
+    for(let i in my){
+        my[i].graphics.clear();
+        const texture = Laya.loader.getRes(sixPoker);
+        my[i].graphics.drawTexture(texture);
+        my[i].scale(.5,.5);
+        my[i].size(texture.width, texture.height);
+        Laya.Tween.to(my[i],{x:x + 150*i,rotation:180},300,Laya.Ease.backOut,null,i*100);
+    }       
 }
 Zhajinhua.Draw.name = function(player){
     const  players = Zhajinhua.players
-    function createLabel(user){
-        console.log(user)
+    function createLabel(text){
+        console.log(text)
         const STROKE_WIDTH = 1;
         const label = new Laya.Label();
         label.font = "Microsoft YaHei";
-        label.text = user.name;
-        label.id = user.id
+        label.text = text;
         label.fontSize = 30;
         label.color = "#0008ff";
         label.stroke = STROKE_WIDTH;
@@ -309,80 +208,8 @@ Zhajinhua.Draw.name = function(player){
     }
     for(let v in players){
         console.log(players[v])
-        players[v].status_ac = createLabel(players[v].user,"#0008ff", "#0008ff").pos(players[v].position[0] - pw+140,players[v].position[1] - 150);
+        players[v].status_ac = createLabel(players[v].user.name,"#0008ff", "#0008ff").pos(players[v].position[0] - pw+140,players[v].position[1] - 150);
     }     
-}
-Zhajinhua.Draw.onPass = function(msg){
-    const playIngs = msg.roomPlayers.playIngs
-    const passId = msg.backObj.playerId
-    Zhajinhua.tool.setDongPlers(playIngs)
-    const plers = Zhajinhua.players
-    let passPlayer = null;
-    for(let  i in plers){
-        if(plers[i].id ==passId){
-            passPlayer = plers[i]
-        }
-    }
-    const d = dialog({
-        content: `玩家<h1>${passPlayer.user.name}<h1>pass`
-    });
-    d.showModal();
-    setTimeout(function(){
-        d.close().remove();
-    },2000)
-}
-Zhajinhua.Draw.pkAc = function(msg){
-    const playIngs = msg.roomPlayers.playIngs
-    const passId = msg.roomPlayers.pkObj.pasObj.user.id
-    Zhajinhua.tool.setDongPlers(playIngs)
-    const name1 = msg.roomPlayers.pkObj.pasObj.user.name
-    const name2 = msg.roomPlayers.pkObj.winObj.user.name
-    const d = dialog({
-        content: `玩家<h1>${name1}<h1>pk玩家${name2}`
-    });
-    d.showModal();
-    setTimeout(function(){
-        d.close().remove();
-    },2000)
-    const g = dialog({
-        content: `玩家<h1>${name2}获胜！！}`
-    });
-    setTimeout(function(){
-        g.showModal();
-    },2000)
-    setTimeout(function(){
-       g.close().remove();
-    },6000)
-}
-Zhajinhua.Draw.setShowPoker = function(msg){
-    const pos = Zhajinhua.positions.showPokerPositions
-    const playIngs = msg.roomPlayers.playIngs
-    let temp = null
-    for(let f in playIngs){
-        if(playIngs[f].id==User.id){
-            temp = playIngs[f]
-        }
-    }
-    if(temp&&temp.isShow){
-        for(let i in pos){
-            const acSprite = new Laya.Sprite();
-            acSprite.x = wh - pw/2
-            acSprite.y = vh - ph/2
-            //获取图片资源
-            const texture = Laya.loader.getRes(sixPoker);
-            //绘制纹理
-            acSprite.graphics.drawTexture(texture);                        
-            //设置纹理宽高
-            acSprite.scale(.5,.5)
-            acSprite.size(texture.width, texture.height);
-            acSprite.pivotY = ph*2
-            acSprite.pivotX = pw*2
-            acSprite.pos( pos[i].x,pos[i].y);
-            acSprite.rotation = 180
-            // acSprite.on(Laya.Event.CLICK, this,onSpriteClick);
-            Laya.stage.addChild(acSprite);
-        }
-    }
 }
 Zhajinhua.Draw.setPoker = function(){
     const pos = Zhajinhua.positions.pokerPositions
@@ -404,11 +231,6 @@ Zhajinhua.Draw.setPoker = function(){
         // acSprite.on(Laya.Event.CLICK, this,onSpriteClick);
         Laya.stage.addChild(acSprite);
         acplays.push(acSprite);
-        for(let o in Zhajinhua.players){
-            if(pos[i].playerId==Zhajinhua.players[o].id){
-                Zhajinhua.players[o].pokers_ac.push(acSprite)
-            }
-        }
     }
 }
 Zhajinhua.Draw.setChip = function(){
@@ -420,7 +242,6 @@ Zhajinhua.Draw.setChip = function(){
         pff.scale(.5,.5)
         pff.size(fdf.width, fdf.height); 
         pff.pos( pos[i].x,pos[i].y);
-        Zhajinhua.chip_ac.push(pff)
         Laya.stage.addChild(pff);
     }
 }
@@ -457,7 +278,7 @@ Zhajinhua.Draw.setToolBar = function(){
     btn3.on(Laya.Event.CLICK, this,Zhajinhua.Event.createClick3);
     Laya.stage.addChild(btn3);
     const btn4 = new Laya.Button();
-    btn4.label="PK" 
+    btn4.label="pass"
     btn4.width = 100
     btn4.height = 50
     btn4.labelStroke = 1
@@ -466,16 +287,6 @@ Zhajinhua.Draw.setToolBar = function(){
     btn4.pos(500, h - 100 );
     btn4.on(Laya.Event.CLICK, this,Zhajinhua.Event.createClick4);
     Laya.stage.addChild(btn4);
-    const bPASS = new Laya.Button();
-    bPASS.label="PASS" 
-    bPASS.width = 100
-    bPASS.height = 50
-    bPASS.labelStroke = 1
-    bPASS.labelStrokeColor = "#333"
-    bPASS.labelSize = 50
-    bPASS.pos(650, h - 100 );
-    bPASS.on(Laya.Event.CLICK, this,Zhajinhua.Event.pass);
-    Laya.stage.addChild(bPASS);
     const btn5 = new Laya.Button();
     btn5.label="准备"
     btn5.width = 100
@@ -564,43 +375,22 @@ Zhajinhua.Draw.fapai = function(){
         console.log(i)
         console.log(players[i%3])
         const my = ps[i%ps.length].position[1]
-        const playerId = ps[i%ps.length].id
         const mx = ps[i%ps.length].position[0]
         const r = randomNumBoth(0,360)
-        Zhajinhua.positions.pokerPositions.push({playerId:playerId,x:mx,y:my,r:r})
+        Zhajinhua.positions.pokerPositions.push({x:mx,y:my,r:r})
         console.log(mx)
         Laya.Tween.to(acplays[i],
             {y:my,x:mx,pivotY:ph*2,pivotX:pw*2,rotation:r}
             ,400,Laya.Ease.backOut,null,i*100);
     }
 }
-Zhajinhua.tool.setDongPlers = function(doingPlers){
-    console.log(doingPlers)
-    const pokers = Zhajinhua.positions.pokerPositions
-    const tempArray = []
-    for(let i =0;i<pokers.length;i++){
-        for(let p in doingPlers){
-            if(doingPlers[p].id == pokers[i].playerId){
-                tempArray.push(pokers[i])
-            }
-        }
-    }
-    let tempFlag = true
-    for(let p in doingPlers){
-        if(doingPlers[p].id == User.id){
-            tempFlag=false
-        }
-    }
-    tempFlag&&(Zhajinhua.positions.showPokerPositions =[])
-    Zhajinhua.positions.pokerPositions = tempArray
-}
 Zhajinhua.tool.forPlayer = function(msg){
     Zhajinhua.doing = msg.roomPlayers.doingObj
-    // if(Object.keys(msg.roomPlayers.fontAcObject).length !=0){
-    //     const acObject = msg.roomPlayers.fontAcObject.get(User.id)
-    //     Zhajinhua.positions.pokerPositions = acObject.pokerPositions
-    //     Zhajinhua.positions.chipPositions = acObject.chipPositions
-    // }
+    if(msg.roomPlayers.fontAcObject.size ==0){
+        const acObject = msg.roomPlayers.fontAcObject.get(User.id)
+        Zhajinhua.positions.pokerPositions = acObject.pokerPositions
+        Zhajinhua.positions.chipPositions = acObject.chipPositions
+    }
     const p = msg.roomPlayers.players
     for(let m in p){
         if(p[m].id === User.id){

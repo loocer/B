@@ -1,0 +1,15 @@
+ exports.acType = {
+	ON_COME : 'ON_COME',
+	ON_READY : 'ON_READY',
+	ON_START : 'ON_START',
+	SHOW_VALUE : 'SHOW_VALUE',
+	GAME_PASS : 'GAME_PASS',
+	GAME_PK : 'GAME_PK',
+	ON_RAISE: 'ON_RAISE',
+	ADD_RAISE: 'ADD_RAISE',
+	GAME_OVER: 'GAME_OVER'
+}
+exports.stepType ={
+	BEGEN:'BEGEN',
+	DOING: 'DOING',
+}

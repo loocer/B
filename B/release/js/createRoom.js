@@ -50,12 +50,12 @@ CreateRoom.network = function(roomNo,peopleNum){
 }
 CreateRoom.Event.onHttpRequestError = function(e)
 {
-    console.log(e);
+    alert(e);
 }
 
 CreateRoom.Event.onHttpRequestProgress = function(e)
 {
-    console.log(e);
+    alert(e);
 }
 
 CreateRoom.Event.onHttpRequestComplete = function(e)
