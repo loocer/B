@@ -68,6 +68,6 @@ ComeRoom.Event.onHttpRequestComplete = function(e)
         Zhajinhua.roomInfo = rus.data
         Zhajinhua.init()
     }
-    console.log(ComeRoomogin.hr.data)
+    console.log(ComeRoom.hr.data)
     // logger.text += "收到数据：" + hr.data;
 }

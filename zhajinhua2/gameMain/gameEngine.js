@@ -41,7 +41,6 @@ function main(msg){
 	 				rooms[i].onStart()
 	 				sendObj = {acType:acType.ON_START,allow:true,roomPlayers:rooms[i],backObj:frontRoomPlayers}
 	 			}else{
-	 				
 	 				sendObj = {acType:acType.ON_START,allow:false,roomPlayers:rooms[i],backObj:frontRoomPlayers}
 	 			}
 		 	}
@@ -111,6 +110,7 @@ function resetRoomPlayer(roomPlayers){
 		}
 		roomPlayers.players[r].isShow = false
 	}
+	roomPlayers.playIngs = [roomPlayers.fangzhu]
 	roomPlayers.doingObj = roomPlayers.players[0]
 	roomPlayers.stepType = 'BEGEN'
 	return roomPlayers;

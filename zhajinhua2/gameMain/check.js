@@ -25,7 +25,11 @@ const check = (msg, room)=>{
 	if(actype == acType.ON_START){
 		if(room.stepType != stepType.DOING){
 			if(room.fangzhu.id ==msg.playerId){
-				return true
+				if(room.players.length >=room.playIngs.length){
+					return true
+				}else{
+					return false
+				}
 			}else{
 				return false
 			}

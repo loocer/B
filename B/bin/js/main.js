@@ -8,6 +8,8 @@ let msg = null
 let tempScan = null
 const Zhajinhua = {
     picNum:0,
+    myPlayer:null,
+    myPlayerPokerUrl:[],
     players:[],
     Draw:{},
     service:{},
@@ -19,8 +21,10 @@ const Zhajinhua = {
     chip_ac:[],
     positions:{},
     socketAddress:{},
+    pokerImg:new Map(),
     picList:[chouMa,sixPoker,pokerBg]
 }
+
 Zhajinhua.service.getSocketAdress = function(){
     const hr = new HttpRequest();
     hr.once(Event.PROGRESS, this, Zhajinhua.socketAddress.onHttpRequestProgress);
@@ -130,14 +134,16 @@ Zhajinhua.init = function(){
     //     per.position = positions[i]
     //     this.players.push(per);
     // }
+    Zhajinhua.tool.initImg()
+    const pokerImg = this.pokerImg
     const picList = this.picList
-    for(let i in picList){
-        Laya.loader.load(picList[i],Laya.Handler.create(this,Zhajinhua.graphicsImg));
-    }
+    const pokerList = [...pokerImg.values()]
+    Laya.loader.load(pokerList,Laya.Handler.create(this,Zhajinhua.graphicsImg));
+    Laya.loader.load(picList,Laya.Handler.create(this,Zhajinhua.graphicsImg));
 }
 Zhajinhua.graphicsImg = function(){
     this.picNum ++
-    if(this.picList.length == this.picNum){
+    if(2 == this.picNum){
         Zhajinhua.service.getSocketAdress()
     }
     // Zhajinhua.view()
@@ -216,27 +222,43 @@ Zhajinhua.Event.pk = function(a){
     //     console.log('ai3')
         // this.Draw.setPoker()
 }
+Zhajinhua.Draw.showValueGraphicsImg = function(){
+    const player = Zhajinhua.myPlayer
+    const my = player.pokers_ac
+    console.log(my);
+    const x = player.position[0] - 150;
+    Zhajinhua.positions.showPokerPositions = []
+    for(let i in my){
+        my[i].graphics.clear();
+        const texture = Laya.loader.getRes(Zhajinhua.myPlayerPokerUrl[i]);
+        my[i].graphics.drawTexture(texture);
+        my[i].scale(.5,.5);
+        my[i].size(texture.width, texture.height);
+        Laya.Tween.to(my[i],{x:x + 150*i,rotation:180},300,Laya.Ease.backOut,null,i*100);
+        Zhajinhua.positions.showPokerPositions.push({x:x + 150*i,y:my[i].y})
+    } 
+    const tempArray = []
+    for(let  i in Zhajinhua.positions.pokerPositions){
+        if(Zhajinhua.positions.pokerPositions[i].playerId !=player.id){
+            tempArray.push(Zhajinhua.positions.pokerPositions[i])
+        }
+    }
+    Zhajinhua.positions.pokerPositions = tempArray
+}
 Zhajinhua.Draw.showValue = function(player){
     if(player.id ==User.id){
-        const my = player.pokers_ac
-        console.log(my);
-        const x = player.position[0] - 150;
-        for(let i in my){
-            my[i].graphics.clear();
-            const texture = Laya.loader.getRes(sixPoker);
-            my[i].graphics.drawTexture(texture);
-            my[i].scale(.5,.5);
-            my[i].size(texture.width, texture.height);
-            Laya.Tween.to(my[i],{x:x + 150*i,rotation:180},300,Laya.Ease.backOut,null,i*100);
-            Zhajinhua.positions.showPokerPositions.push({x:x + 150*i,y:my[i].y})
-        } 
-        const tempArray = []
-        for(let  i in Zhajinhua.positions.pokerPositions){
-            if(Zhajinhua.positions.pokerPositions[i].playerId !=player.id){
-                tempArray.push(Zhajinhua.positions.pokerPositions[i])
-            }
+        Zhajinhua.myPlayerPokerUrl = []
+        Zhajinhua.myPlayer = player
+        const values = player.pokerValue
+        for(let v in values){
+            // let fileName = Math.ceil(values[v]/4)
+            // let picName = values[v]%4==0?4:values[v]%4
+            let img = Zhajinhua.pokerImg.get(values[v])
+            Zhajinhua.myPlayerPokerUrl.push(img)
+            // Zhajinhua.myPlayerPokerUrl.push(`res/atlas/value/${picName}/${fileName}.jpg`)
+            // Laya.loader.load(Zhajinhua.myPlayerPokerUrl[v],Laya.Handler.create(this,Zhajinhua.Draw.showValueGraphicsImg));
         }
-        Zhajinhua.positions.pokerPositions = tempArray
+        Zhajinhua.Draw.showValueGraphicsImg()
     }else{
         const x = player.position[0] - 150;
         const pok = player.pokers_ac
@@ -369,7 +391,7 @@ Zhajinhua.Draw.setShowPoker = function(msg){
             acSprite.x = wh - pw/2
             acSprite.y = vh - ph/2
             //获取图片资源
-            const texture = Laya.loader.getRes(sixPoker);
+            const texture = Laya.loader.getRes(Zhajinhua.myPlayerPokerUrl[i]);
             //绘制纹理
             acSprite.graphics.drawTexture(texture);                        
             //设置纹理宽高
@@ -572,6 +594,15 @@ Zhajinhua.Draw.fapai = function(){
         Laya.Tween.to(acplays[i],
             {y:my,x:mx,pivotY:ph*2,pivotX:pw*2,rotation:r}
             ,400,Laya.Ease.backOut,null,i*100);
+    }
+}
+Zhajinhua.tool.initImg = function(){
+    let index = 1
+    for(let f=1;f<5;f++){
+        for(let i=1;i<14;i++){
+            Zhajinhua.pokerImg.set(index,`res/atlas/value/${f}/${i}.jpg`)
+            index++
+        }
     }
 }
 Zhajinhua.tool.setDongPlers = function(doingPlers){
