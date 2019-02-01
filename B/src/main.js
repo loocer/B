@@ -304,12 +304,12 @@ Zhajinhua.Draw.over = function(msg){
     const d = dialog({
         content: `玩家${playIng.user.name}获胜！`
     });
-    setTimeout(function(){
+    window.setTimeout(function(){
         d.show();
-        Zhajinhua.reset()
-    },2000)
-    setTimeout(function(){
-        d.close().remove();
+        window.setTimeout(function(){
+            Zhajinhua.reset()
+            d.close().remove();
+        },1000)
     },2000)
 }
 Zhajinhua.Draw.name = function(player){
@@ -598,8 +598,8 @@ Zhajinhua.Draw.fapai = function(){
 }
 Zhajinhua.tool.initImg = function(){
     let index = 1
-    for(let f=1;f<5;f++){
-        for(let i=1;i<14;i++){
+    for(let i=1;i<14;i++){
+        for(let f=1;f<5;f++){
             Zhajinhua.pokerImg.set(index,`res/atlas/value/${f}/${i}.jpg`)
             index++
         }

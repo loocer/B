@@ -160,9 +160,33 @@ class roomPlayers{
 		}else if(o.ValueType<t.ValueType){
 			this._setPkObj(t.player,o.player)
 		}else{
-			this._setPkObj(t.player,o.player)
+			const players = this._commonType(oPlayer,tPlayer)
+			this._setPkObj(players[0],players[1])
 		}
 		this._getNextDoingObj(msgObj)
+	}
+	_commonType(oPlayer,tPlayer){
+		oValue = oPlayer.pokerValue
+		tValue = tPlayer.pokerValue
+		oValue.sort((a,b)=>{return b-a});
+		tValue.sort((a,b)=>{return b-a});
+		if(oValue[2]<5&&tValue[2]>4){
+			return [oPlayer,tPlayer]
+		}
+		if(tValue[2]<5&&oValue[2]>4){
+			return [tPlayer,oPlayer]
+		}
+		else{
+			for(let i=0;i<3;i++){
+				if(oValue[i]>tValue[i]){
+					return [oPlayer,tPlayer]
+				}
+				if(oValue[i]<tValue[i]){
+					return [tPlayer,oPlayer]
+				}
+			}
+			return [tPlayer,oPlayer]
+		}
 	}
 	_setPkObj(o,p){
 		this.pkObj.winObj = o
