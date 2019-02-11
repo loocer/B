@@ -113,6 +113,7 @@ function resetRoomPlayer(roomPlayers){
 	roomPlayers.playIngs = [roomPlayers.fangzhu]
 	roomPlayers.doingObj = roomPlayers.players[0]
 	roomPlayers.stepType = 'BEGEN'
+	roomPlayers.fontAcObject.clear();
 	return roomPlayers;
 }
 module.exports=main

@@ -166,8 +166,8 @@ class roomPlayers{
 		this._getNextDoingObj(msgObj)
 	}
 	_commonType(oPlayer,tPlayer){
-		oValue = oPlayer.pokerValue
-		tValue = tPlayer.pokerValue
+		const oValue = oPlayer.pokerValue
+		const tValue = tPlayer.pokerValue
 		oValue.sort((a,b)=>{return b-a});
 		tValue.sort((a,b)=>{return b-a});
 		if(oValue[2]<5&&tValue[2]>4){

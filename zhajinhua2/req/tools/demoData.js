@@ -2,14 +2,14 @@ exports.users = [
 	{
 		id:'r42r3r4',
 		name:'立马比1',
-		avatarUrl:'/static/1avatar.jpg',
+		avatarUrl:'https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=d2196c373efae6cd18b9a3336eda6441/f703738da9773912f6290861f3198618367ae2a7.jpg',
 		password:'1qaz',
 		account:13
 	},
 	{
 		id:'g43533',
 		name:'立马比2',
-		avatarUrl:'/static/2avatar.jpg',
+		avatarUrl:'https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=d2196c373efae6cd18b9a3336eda6441/f703738da9773912f6290861f3198618367ae2a7.jpg',
 		password:'2qaz'
 	},
 	{

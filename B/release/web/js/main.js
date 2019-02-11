@@ -299,18 +299,56 @@ Zhajinhua.Draw.over = function(msg){
         const r = randomNumBoth(0,360)
          Laya.Tween.to(chips[i],
             {scaleX:0,scaleY:0,x:passPlayer.position[0],y:passPlayer.position[1],pivotY:50,pivotX:50,rotation:r}
-            ,400,Laya.Ease.backOut,null,i*100);
+            ,1000,Laya.Ease.backOut,null,i*100);
     }
+    // Zhajinhua.reset()
     const d = dialog({
         content: `玩家${playIng.user.name}获胜！`
     });
-    window.setTimeout(function(){
-        d.show();
-        window.setTimeout(function(){
+    let showPanel = ''
+    for(let u in plers){
+        console.log('-------------------------------')
+        console.log(plers[u].user.avatarUrl)
+        showPanel+=`<div style="display: inline-block;">
+        <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[0])}" alt=""></div>
+        <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[1])}" alt=""></div>
+        <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[2])}" alt=""></div>
+        <div style="width: 25%;float: right">
+            <img width="60%" height="80" src="${plers[u].user.avatarUrl}" alt="">
+        </div>
+        </div>`
+    }
+    
+    new Promise(function(resolve, reject){
+        setTimeout(function(){
+            d.show();
+            resolve();
+        }, 1000);
+    }).then((resolve, reject)=>{
+        setTimeout(function(){
             Zhajinhua.reset()
             d.close().remove();
         },1000)
-    },2000)
+    }).then(()=>{
+        const g = dialog({
+        title: '查看牌',
+        content: `<div>${showPanel}</div>`
+        });
+        g.showModal();
+        g.close().remove();
+        const bat = dialog({
+        title: '查看牌',
+        content: `<div>${showPanel}</div>`
+        });
+        bat.showModal();
+    })
+    // window.setTimeout(function(){
+    //     d.show();
+    //     window.setTimeout(function(){
+    //         Zhajinhua.reset()
+    //         d.close().remove();
+    //     },1000)
+    // },1000)
 }
 Zhajinhua.Draw.name = function(player){
     const  players = Zhajinhua.players
@@ -435,6 +473,7 @@ Zhajinhua.Draw.setPoker = function(){
 }
 Zhajinhua.Draw.setChip = function(){
     const pos = Zhajinhua.positions.chipPositions
+    Zhajinhua.chip_ac = []
     for(let i in pos){
         const pff = new Laya.Sprite();
         var fdf = Laya.loader.getRes(chouMa);
