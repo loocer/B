@@ -9,20 +9,20 @@ exports.users = [
 	{
 		id:'g43533',
 		name:'立马比2',
-		avatarUrl:'https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike180%2C5%2C5%2C180%2C60/sign=d2196c373efae6cd18b9a3336eda6441/f703738da9773912f6290861f3198618367ae2a7.jpg',
+		avatarUrl:'https://img5.duitang.com/uploads/item/201409/23/20140923094045_BNYji.thumb.700_0.png',
 		password:'2qaz'
 	},
 	{
 		id:'y65y65u',
 		name:'立马比3',
-		avatarUrl:'/static/3avatar.jpg',
+		avatarUrl:'https://b-ssl.duitang.com/uploads/item/201811/01/20181101170449_lcerc.thumb.700_0.jpg',
 		password:'3qaz',
 		account:-13
 	},
 	{
 		id:'t534t54t',
 		name:'立马比4',
-		avatarUrl:'/static/4avatar.jpg',
+		avatarUrl:'https://img3.duitang.com/uploads/item/201411/22/20141122001724_RjwPY.jpeg',
 		password:'4qaz',
 		account:1356
 	},

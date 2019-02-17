@@ -40,6 +40,11 @@ userControl.getUserInfo=function(app){
         res.json(results)
       }
       if(status){
+        demoData.rooms.forEach(function(room,index){
+          if (room.id==roomNo) {
+            demoData.rooms.splice(index, 1);
+          }
+        });
         let roomPlayers = new RoomPlayers({id:roomNo, peopleNum:peopleNum})
         rooms.push(roomPlayers)
         roomPlayers.totalRaiseMoney = roomPlayers.raiseMoney * roomPlayers.peopleNum

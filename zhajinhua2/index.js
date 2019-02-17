@@ -15,15 +15,18 @@ function roomSocket(socket){
   console.log('-----dcdcoId-----')
 	for(let i in rooms){
     // console.log(rooms)
-      socket.on(rooms[i].id, function(msgObj){
+      const socId = rooms[i].id
+      socket.on(socId, function(msgObj){
         // console.log(socket.client)
         console.log('-----dcdcoId-----')
+        console.log(rooms)
         console.log(msgObj)
         // let roomts = Object.keys(socket.rooms);
         let returnMsg = gameObj(msgObj)
         console.log(returnMsg)
         if(returnMsg){
-          io.emit(rooms[i].id, returnMsg);
+          console.log(rooms)
+          io.emit(socId, returnMsg);
         }
   	  });
 

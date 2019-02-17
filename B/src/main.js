@@ -156,6 +156,7 @@ Zhajinhua.view = function(msg){
     this.Draw.setPoker()
     this.Draw.setChip()
     this.Draw.setShowPoker(msg)
+    this.Draw.setAchievement()
 }
 Zhajinhua.Event.createClick1 = function(){
     // tempScan = Laya.stage._childs.concat([])
@@ -222,6 +223,20 @@ Zhajinhua.Event.pk = function(a){
     //     console.log('ai3')
         // this.Draw.setPoker()
 }
+// Zhajinhua.Draw.header = ()=>{
+//     console.log(user)
+//     const STROKE_WIDTH = 1;
+//     const label = new Laya.Label();
+//     label.font = "Microsoft YaHei";
+//     label.text = 退出房间;
+//     label.id = user.id
+//     label.fontSize = 30;
+//     label.color = "#0008ff";
+//     label.stroke = STROKE_WIDTH;
+//     label.strokeColor = "#0008ff";
+//     label.on(Laya.Event.CLICK, this,Zhajinhua.Event.pk);
+//     Laya.stage.addChild(label);
+// }
 Zhajinhua.Draw.showValueGraphicsImg = function(){
     const player = Zhajinhua.myPlayer
     const my = player.pokers_ac
@@ -251,12 +266,8 @@ Zhajinhua.Draw.showValue = function(player){
         Zhajinhua.myPlayer = player
         const values = player.pokerValue
         for(let v in values){
-            // let fileName = Math.ceil(values[v]/4)
-            // let picName = values[v]%4==0?4:values[v]%4
             let img = Zhajinhua.pokerImg.get(values[v])
             Zhajinhua.myPlayerPokerUrl.push(img)
-            // Zhajinhua.myPlayerPokerUrl.push(`res/atlas/value/${picName}/${fileName}.jpg`)
-            // Laya.loader.load(Zhajinhua.myPlayerPokerUrl[v],Laya.Handler.create(this,Zhajinhua.Draw.showValueGraphicsImg));
         }
         Zhajinhua.Draw.showValueGraphicsImg()
     }else{
@@ -307,8 +318,6 @@ Zhajinhua.Draw.over = function(msg){
     });
     let showPanel = ''
     for(let u in plers){
-        console.log('-------------------------------')
-        console.log(plers[u].user.avatarUrl)
         showPanel+=`<div style="display: inline-block;">
         <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[0])}" alt=""></div>
         <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[1])}" alt=""></div>
@@ -330,15 +339,12 @@ Zhajinhua.Draw.over = function(msg){
             d.close().remove();
         },1000)
     }).then(()=>{
-        const g = dialog({
-        title: '查看牌',
-        content: `<div>${showPanel}</div>`
-        });
-        g.showModal();
-        g.close().remove();
         const bat = dialog({
         title: '查看牌',
-        content: `<div>${showPanel}</div>`
+        content: `<div>${showPanel}</div>`,
+        onclose: function () {
+           msg.roomPlayers.numTotal==msg.roomPlayers.num&&Zhajinhua.Draw.gameOver(plers)
+        },
         });
         bat.showModal();
     })
@@ -349,6 +355,30 @@ Zhajinhua.Draw.over = function(msg){
     //         d.close().remove();
     //     },1000)
     // },1000)
+}
+Zhajinhua.Draw.gameOver = function(player){
+    let trs = ''
+    for(let p in player){
+        trs+=`<tr>
+            <td>${player[p].user.name}</td>
+            <td>${player[p].raiseTotalMoney}</td>
+        </tr>`
+    }
+    let table = `<table border="1">
+                    <tr>
+                        <th>玩家</th>
+                        <th>分数</th>
+                    </tr>
+                    ${trs}
+                </table>`
+    const bat = dialog({
+        title: '查看牌',
+        content: `<div>${table}</div>`,
+        onclose: function () {
+            Choise.init()
+        },
+        });
+        bat.showModal();
 }
 Zhajinhua.Draw.name = function(player){
     const  players = Zhajinhua.players
@@ -579,6 +609,24 @@ Zhajinhua.Draw.setStatus = function(){
             createLabelc(players[v].isEnable).pos(players[v].position[0] - pw-50,players[v].position[1] - 230);
         }
         players[v].status_ac = createLabel(players[v].state).pos(players[v].position[0] - pw,players[v].position[1] - 170);
+    }
+}
+Zhajinhua.Draw.setAchievement = function(){
+    const  players = Zhajinhua.players
+    function createLabel(raiseTotalMoney){
+        const STROKE_WIDTH =2;
+        const label = new Laya.Label();
+        label.font = "Microsoft YaHei";
+        label.text = raiseTotalMoney+"";
+        label.fontSize = 50;
+        label.color = '#000000';
+        label.stroke = STROKE_WIDTH;
+        label.strokeColor = '#000000';
+        Laya.stage.addChild(label);
+        return label
+    }
+    for(let v in players){
+        createLabel(players[v].raiseTotalMoney).pos(players[v].position[0] - pw,players[v].position[1]-230);
     }
 }
 Zhajinhua.Draw.touzhu = function(ps){

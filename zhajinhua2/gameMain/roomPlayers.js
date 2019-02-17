@@ -30,6 +30,8 @@ class roomPlayers{
 		this.sendObj = null
 		this.winObj = null
 		this.playIngs = []
+		this.num = 1
+		this.numTotal = 4
 		this.players = []
 		this.pkObj = {}
 		this.fontAcObject = new Map()
@@ -109,7 +111,7 @@ class roomPlayers{
 			if(this.players[p].id ==msgObj.playerId){
 				this.players[p].state = acType.ON_RAISE
 				this.players[p].raiseMoney = msgObj.raiseMoney
-				this.players[p].raiseTotalMoney += msgObj.raiseMoney
+				this.players[p].raiseTotalMoney -= msgObj.raiseMoney
 				this.totalRaiseMoney += msgObj.raiseMoney
 			}
 		}
@@ -120,21 +122,12 @@ class roomPlayers{
 			if(this.players[p].id ==msgObj.playerId){
 				this.players[p].state = acType.ADD_RAISE
 				this.raiseMoney = msgObj.raiseMoney
+				this.players[p].raiseTotalMoney -= msgObj.raiseMoney
 				this.players[p].raiseMoney = msgObj.raiseMoney
 				this.totalRaiseMoney += msgObj.raiseMoney
 			}
 		}
 	}
-	// onRaise(msgObj){
-	// 	for(let p in this.players){
-	// 		if(this.players[p].id ==msgObj.playId){
-	// 			this.players[p].status = playerStatus.RAISE
-	// 			this.raiseMoney = msgObj.raiseMoney
-	// 			this.players[p].raiseMoney = msgObj.raiseMoney
-	// 			this.totalRaiseMoney += msgObj.raiseMoney
-	// 		}
-	// 	}
-	// }
 	onPass(msgObj){
 		for(let p in this.players){
 			if(this.players[p].id ==msgObj.playerId){

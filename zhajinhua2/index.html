@@ -28,23 +28,29 @@
     <script src="http://aui.github.io/artDialog/dist/dialog-plus.js"></script>
   </head>
   <body>
-    <div>
-      <div style="width: 25%;float: right">
-        <img width="90%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt="">
-      </div>
-      <div style="width: 25%;float: right"><img width="90%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt=""></div>
-      <div style="width: 25%;float: right"><img width="90%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt=""></div>
-      <div style="width: 25%;float: right"><img width="90%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt=""></div>
-      
-    </div>
+    
     <ul id="messages"></ul>
       create room:<input id="my" autocomplete="off" /><button id="cre">Send</button>
       come message:<input id="mt" autocomplete="off" /><button id="com">Send</button>
       send room:<input id="sendMsg" autocomplete="off" /><button id="send">Send</button>
+      <button id="createRoom">生成房间</button>
+      <div class="rooms"></div>
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       $(function () {
+        $.get("/get-room", function(result){
+          for(let i in result.data){
+            $(".rooms").append(`<li>${result.data[i].id}</li>`);
+          }
+          
+        });
+        $("#createRoom").click(function(){
+          $.get("/new-room", function(result){
+            location.reload() 
+          });
+        })
         var socket = null;
         var flag = false;
         var roomId = null;
@@ -114,19 +120,7 @@
         });
         
       });
-      var d = dialog({
-        title: 'message',
-        content: `<div>
-      <div style="width: 25%;float: right">
-        <img width="60%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt="">
-      </div>
-      <div style="width: 25%;float: right"><img width="60%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt=""></div>
-      <div style="width: 25%;float: right"><img width="60%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt=""></div>
-      <div style="width: 25%;float: right"><img width="80%" height="200" src="http://n.sinaimg.cn/finance/transform/105/w550h355/20190203/qU_J-hsmkfyn9784505.jpg" alt=""></div>
       
-    </div>`
-      });
-      d.showModal();
     </script>
 
   </body>

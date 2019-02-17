@@ -70,11 +70,10 @@ function main(msg){
 	 			rooms[i].onPk(msg)
 	 			const flag = rooms[i].playIngs.length
 	 			if(flag<2){
-	 				rooms[i].winObj = rooms[i].playIngs[0]
-	 				rooms[i].playIngs = []
-	 				frontRoomPlayers.acType = acType.GAME_OVER
+	 				checkFinishGame(rooms[i])
 	 				const room = resetRoomPlayer(rooms[i])
-	 				sendObj = {acType:acType.GAME_OVER,roomPlayers:room,backObj:frontRoomPlayers}	 	
+	 				sendObj = {acType:acType.GAME_OVER,roomPlayers:room,backObj:frontRoomPlayers}	
+	 				rooms[i].num==rooms[i].numTotal&&rooms.splice(i, 1);
 	 			}else{
 	 				frontRoomPlayers.acType = acType.GAME_PK
 	 				sendObj = {acType:acType.GAME_PK,roomPlayers:rooms[i],backObj:frontRoomPlayers}	 				
@@ -85,11 +84,10 @@ function main(msg){
 	 			rooms[i].onPass(msg)
 	 			const flag = rooms[i].playIngs.length
 	 			if(flag<2){
-	 				rooms[i].winObj = rooms[i].playIngs[0]
-	 				rooms[i].playIngs = []
-	 				frontRoomPlayers.acType = acType.GAME_OVER
+	 				checkFinishGame(rooms[i])
 	 				const room = resetRoomPlayer(rooms[i])
-	 				sendObj = {acType:acType.GAME_OVER,roomPlayers:room,backObj:frontRoomPlayers}	 	
+	 				sendObj = {acType:acType.GAME_OVER,roomPlayers:room,backObj:frontRoomPlayers}	
+	 				rooms[i].num==rooms[i].numTotal&&rooms.splice(i, 1); 	
 	 			}else{
 	 				frontRoomPlayers.acType = acType.GAME_PASS
 	 				sendObj = {acType:acType.GAME_PASS,roomPlayers:rooms[i],backObj:frontRoomPlayers}				
@@ -102,6 +100,12 @@ function main(msg){
 		}
 	}
 }
+const checkFinishGame =(roomPlayer)=>{
+	roomPlayer.winObj = roomPlayer.playIngs[0]
+	roomPlayer.playIngs = []
+	frontRoomPlayers.acType = acType.GAME_OVER
+	roomPlayer.winObj.raiseTotalMoney +=roomPlayer.totalRaiseMoney
+}
 function resetRoomPlayer(roomPlayers){
 	for(let r in roomPlayers.players){
 		roomPlayers.players[r].state = acType.ON_COME
@@ -110,6 +114,8 @@ function resetRoomPlayer(roomPlayers){
 		}
 		roomPlayers.players[r].isShow = false
 	}
+	roomPlayers.num++
+	roomPlayers.totalRaiseMoney = 0
 	roomPlayers.playIngs = [roomPlayers.fangzhu]
 	roomPlayers.doingObj = roomPlayers.players[0]
 	roomPlayers.stepType = 'BEGEN'

@@ -23,7 +23,7 @@ class player{
 		this.raiseStatus = true,//true is going,false is not going
 		this.pokerValue = [],
 		this.raiseMoney = 200,
-		this.raiseTotalMoney = 200
+		this.raiseTotalMoney = 0
 	}
 	setPosation(P){
 		this.posation = P
