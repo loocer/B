@@ -7,14 +7,13 @@ var bodyParser = require('body-parser');
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 var rooms=require('./gameMain/rooms');
-var gameObj=require('./gameMain/gameEngine');
+var gameEngine=require('./gameMain/gameEngine');
 var allreq=require('./req/allControl');
 function roomSocket(socket){
   // console.log('所有房间------------')
 	// console.log(rooms)
   console.log('-----dcdcoId-----')
 	for(let i in rooms){
-    // console.log(rooms)
       const socId = rooms[i].id
       socket.on(socId, function(msgObj){
         // console.log(socket.client)
@@ -22,10 +21,8 @@ function roomSocket(socket){
         console.log(rooms)
         console.log(msgObj)
         // let roomts = Object.keys(socket.rooms);
-        let returnMsg = gameObj(msgObj)
-        console.log(returnMsg)
+        let returnMsg = gameEngine.main(msgObj)
         if(returnMsg){
-          console.log(rooms)
           io.emit(socId, returnMsg);
         }
   	  });
