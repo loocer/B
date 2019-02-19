@@ -21,7 +21,7 @@ class roomPlayers{
 		this.id = id
 		this.peopleNum = peopleNum
 		this.stepType = acType.BEGEN
-		this.status = true
+		this.status = false
 		this.raiseMoney = 1
 		this.totalRaiseMoney = 0
 		this.fangzhu = null
@@ -94,6 +94,9 @@ class roomPlayers{
 		}
 	}
 	onStart(msgObj){
+		for(let i in this.playIngs){
+			this.playIngs[i].isEnable = true
+		}
 		this.setPokersValue()
 		this.stepType = stepType.DOING
 	}
@@ -129,13 +132,10 @@ class roomPlayers{
 		}
 	}
 	onPass(msgObj){
-		for(let p in this.players){
-			if(this.players[p].id ==msgObj.playerId){
-				this.players[p].state = acType.GAME_PASS
-			}
-		}
 		for(let i in this.playIngs){
 			if(this.playIngs[i].id ==msgObj.playerId){
+				this.players[i].state = acType.GAME_PASS
+				this.players[i].isEnable = false
 				this.playIngs.splice(i, 1);
 			}
 		}
@@ -184,6 +184,7 @@ class roomPlayers{
 	_setPkObj(o,p){
 		this.pkObj.winObj = o
 		this.pkObj.pasObj = p
+		this.pkObj.isEnable = false
 		const oPlayer = this.getPlayerById(p.id)
 		oPlayer.state = acType.GAME_PASS
 		for(let i in this.playIngs){

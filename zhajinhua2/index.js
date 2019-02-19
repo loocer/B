@@ -21,7 +21,7 @@ function roomSocket(socket){
         console.log(rooms)
         console.log(msgObj)
         // let roomts = Object.keys(socket.rooms);
-        let returnMsg = gameEngine.main(msgObj)
+        let returnMsg = gameEngine.init(msgObj)
         if(returnMsg){
           io.emit(socId, returnMsg);
         }

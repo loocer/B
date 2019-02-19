@@ -148,11 +148,11 @@ Zhajinhua.graphicsImg = function(){
     }
     // Zhajinhua.view()
 }
-Zhajinhua.view = function(msg){
+Zhajinhua.view = function(msg,p){
     console.log('it is finish!')
     this.Draw.name()
     this.Draw.setStatus()
-    this.Draw.setToolBar()
+    this.Draw.setToolBar(msg)
     this.Draw.setPoker()
     this.Draw.setChip()
     this.Draw.setShowPoker(msg)
@@ -318,16 +318,22 @@ Zhajinhua.Draw.over = function(msg){
     });
     let showPanel = ''
     for(let u in plers){
-        showPanel+=`<div style="display: inline-block;">
-        <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[0])}" alt=""></div>
-        <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[1])}" alt=""></div>
-        <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[2])}" alt=""></div>
-        <div style="width: 25%;float: right">
-            <img width="60%" height="80" src="${plers[u].user.avatarUrl}" alt="">
-        </div>
-        </div>`
+        // showPanel+=`<div style="display: inline-block;">
+        // <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[0])}" alt=""></div>
+        // <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[1])}" alt=""></div>
+        // <div style="width: 25%;float: right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[2])}" alt=""></div>
+        // <div style="width: 25%;float: right">
+        //     <img width="60%" height="80" src="${plers[u].user.avatarUrl}" alt="">
+        // </div>
+        // </div>`
+        showPanel+=`<tr>
+            <td align="left"><img width="80" height="80" src="${plers[u].user.avatarUrl}" alt=""></td>
+            <td align="left"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[0])}" alt=""></td>
+            <td align="right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[1])}" alt=""></td>
+            <td align="right"><img width="80%" height="100" src="${Zhajinhua.pokerImg.get(plers[u].pokerValue[2])}" alt=""></td>
+        </tr>`
     }
-    
+    let endInfo = `<table width="100%" border="1">${showPanel}</table>`
     new Promise(function(resolve, reject){
         setTimeout(function(){
             d.show();
@@ -341,7 +347,7 @@ Zhajinhua.Draw.over = function(msg){
     }).then(()=>{
         const bat = dialog({
         title: '查看牌',
-        content: `<div>${showPanel}</div>`,
+        content: `<div>${endInfo}</div>`,
         onclose: function () {
            msg.roomPlayers.numTotal==msg.roomPlayers.num&&Zhajinhua.Draw.gameOver(plers)
         },
@@ -378,7 +384,7 @@ Zhajinhua.Draw.gameOver = function(player){
             Choise.init()
         },
         });
-        bat.showModal();
+    bat.showModal();
 }
 Zhajinhua.Draw.name = function(player){
     const  players = Zhajinhua.players
@@ -515,68 +521,149 @@ Zhajinhua.Draw.setChip = function(){
         Laya.stage.addChild(pff);
     }
 }
-Zhajinhua.Draw.setToolBar = function(){
+Zhajinhua.Draw.setToolBar = function(msg){
+    const { status, fangzhu, doingObj } = msg.roomPlayers
+    const acType = msg.acType
+    const isFnagzu = User.id === fangzhu.id
+    const flag = User.id === doingObj.id
+    const textColorAble = "#333"
+    const textColordisAble = '#c6efd6'
+    const ps = Zhajinhua.players
+    let temp = null
+    for(let i in ps){
+        if(ps[i].user.id == User.id){
+            temp= ps[i];
+        }
+    }
     const btn1 = new Laya.Button();
     btn1.label="发牌"
     btn1.width = 100
     btn1.height = 50
     btn1.labelStroke = 1
-    btn1.labelStrokeColor = "#333"
+    btn1.labelStrokeColor = textColorAble
     btn1.labelSize = 50
     btn1.pos(50, h - 100 );
     btn1.on(Laya.Event.CLICK, this,Zhajinhua.Event.createClick1);
-    Laya.stage.addChild(btn1);
+    const btn11 = new Laya.Button();
+    btn11.label="发牌"
+    btn11.width = 100
+    btn11.height = 50
+    btn11.labelStroke = 1
+    btn11.labelStrokeColor = textColordisAble
+    btn11.labelSize = 50
+    btn11.pos(50, h - 100 );
+    if(isFnagzu&&!status){
+         Laya.stage.addChild(btn1);
+    }else{
+        Laya.stage.addChild(btn11);
+    }
     const btn2 = new Laya.Button();
     btn2.label="看牌"
     btn2.width = 100
     btn2.height = 50
     btn2.labelStroke = 1
-    btn2.labelStrokeColor = "#333"
+    btn2.labelStrokeColor = textColorAble
     btn2.labelSize = 50
     btn2.pos(200, h - 100 );
     btn2.on(Laya.Event.CLICK, this,Zhajinhua.Event.createClick2);
-    Laya.stage.addChild(btn2);
-    Laya.stage.addChild(btn1);
+    const btn22 = new Laya.Button();
+    btn22.label="看牌"
+    btn22.width = 100
+    btn22.height = 50
+    btn22.labelStroke = 1
+    btn22.labelStrokeColor = textColordisAble
+    btn22.labelSize = 50
+    btn22.pos(200, h - 100 );
+    if(temp.isEnable){
+        Laya.stage.addChild(btn2);
+    }else{
+        Laya.stage.addChild(btn22);
+    }
     const btn3 = new Laya.Button();
     btn3.label="投注"
     btn3.width = 100
     btn3.height = 50
     btn3.labelStroke = 1
-    btn3.labelStrokeColor = "#333"
+    btn3.labelStrokeColor = textColorAble
     btn3.labelSize = 50
     btn3.pos(350, h - 100 );
     btn3.on(Laya.Event.CLICK, this,Zhajinhua.Event.createClick3);
-    Laya.stage.addChild(btn3);
+    const btn33 = new Laya.Button();
+    btn33.label="投注"
+    btn33.width = 100
+    btn33.height = 50
+    btn33.labelStroke = 1
+    btn33.labelStrokeColor = textColordisAble
+    btn33.labelSize = 50
+    btn33.pos(350, h - 100 );
     const btn4 = new Laya.Button();
     btn4.label="PK" 
     btn4.width = 100
     btn4.height = 50
     btn4.labelStroke = 1
-    btn4.labelStrokeColor = "#333"
+    btn4.labelStrokeColor = textColorAble
     btn4.labelSize = 50
     btn4.pos(500, h - 100 );
     btn4.on(Laya.Event.CLICK, this,Zhajinhua.Event.createClick4);
-    Laya.stage.addChild(btn4);
+    const btn44 = new Laya.Button();
+    btn44.label="PK" 
+    btn44.width = 100
+    btn44.height = 50
+    btn44.labelStroke = 1
+    btn44.labelStrokeColor = textColordisAble
+    btn44.labelSize = 50
+    btn44.pos(500, h - 100 );
+    if(flag){
+        Laya.stage.addChild(btn4);
+        Laya.stage.addChild(btn3);
+    }else{
+        Laya.stage.addChild(btn33);
+        Laya.stage.addChild(btn44);
+    }
     const bPASS = new Laya.Button();
     bPASS.label="PASS" 
     bPASS.width = 100
     bPASS.height = 50
     bPASS.labelStroke = 1
-    bPASS.labelStrokeColor = "#333"
+    bPASS.labelStrokeColor = textColorAble
     bPASS.labelSize = 50
     bPASS.pos(650, h - 100 );
     bPASS.on(Laya.Event.CLICK, this,Zhajinhua.Event.pass);
-    Laya.stage.addChild(bPASS);
+    const bPASSss = new Laya.Button();
+    bPASSss.label="PASS" 
+    bPASSss.width = 100
+    bPASSss.height = 50
+    bPASSss.labelStroke = 1
+    bPASSss.labelStrokeColor = textColordisAble
+    bPASSss.labelSize = 50
+    bPASSss.pos(650, h - 100 );
+    if(temp.isEnable){
+        Laya.stage.addChild(bPASS);
+    }else{
+        Laya.stage.addChild(bPASSss);
+    }
     const btn5 = new Laya.Button();
     btn5.label="准备"
     btn5.width = 100
     btn5.height = 50
     btn5.labelStroke = 1
-    btn5.labelStrokeColor = "#333"
+    btn5.labelStrokeColor = textColorAble
     btn5.labelSize = 50
     btn5.pos(w-150, h - 100 );
     btn5.on(Laya.Event.CLICK, this,Zhajinhua.Event.createClick5);
-    Laya.stage.addChild(btn5);
+    const btn55 = new Laya.Button();
+    btn55.label="准备"
+    btn55.width = 100
+    btn55.height = 50
+    btn55.labelStroke = 1
+    btn55.labelStrokeColor = textColordisAble
+    btn55.labelSize = 50
+    btn55.pos(w-150, h - 100 );
+    if(!status){
+        Laya.stage.addChild(btn5);
+    }else{
+        Laya.stage.addChild(btn55);
+    }
 }
 Zhajinhua.Draw.setStatus = function(){
     const  players = Zhajinhua.players
