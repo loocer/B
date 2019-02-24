@@ -42,7 +42,7 @@
       $(function () {
         $.get("/get-room", function(result){
           for(let i in result.data){
-            $(".rooms").append(`<li>${result.data[i].id}</li>`);
+            $(".rooms").append(`<li>${result.data[i]}</li>`);
           }
           
         });

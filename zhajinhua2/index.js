@@ -13,8 +13,8 @@ function roomSocket(socket){
   // console.log('所有房间------------')
 	// console.log(rooms)
   console.log('-----dcdcoId-----')
-	for(let i in rooms){
-      const socId = rooms[i].id
+  for (var key of rooms.keys()) {
+    const socId = key
       socket.on(socId, function(msgObj){
         // console.log(socket.client)
         console.log('-----dcdcoId-----')
@@ -25,9 +25,23 @@ function roomSocket(socket){
         if(returnMsg){
           io.emit(socId, returnMsg);
         }
-  	  });
+      });
+  }
+	// for(let i in rooms){
+ //      const socId = rooms[i].id
+ //      socket.on(socId, function(msgObj){
+ //        // console.log(socket.client)
+ //        console.log('-----dcdcoId-----')
+ //        console.log(rooms)
+ //        console.log(msgObj)
+ //        // let roomts = Object.keys(socket.rooms);
+ //        let returnMsg = gameEngine.init(msgObj)
+ //        if(returnMsg){
+ //          io.emit(socId, returnMsg);
+ //        }
+ //  	  });
 
-	}
+	// }
 }
 
 app.use(session({

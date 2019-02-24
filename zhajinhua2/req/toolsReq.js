@@ -23,7 +23,7 @@ toolsReq.getSocketAddress=function(app){
 toolsReq.getRoom=function(app){
   app.get('/get-room',function(req,res){
     let results = {}
-    results.data = demoData.rooms
+    results.data = [...demoData.rooms]
     results.status = 2
     results.msg = '获取成功！'
     res.status(200),
@@ -32,7 +32,7 @@ toolsReq.getRoom=function(app){
 }
 toolsReq.addRoom=function(app){
   app.get('/new-room',function(req,res){
-    const rooms =[]
+    const rooms = demoData.rooms
     const newRoom = ()=>{
       let Num="";
       for(let i=0;i<6;i++)
@@ -44,22 +44,20 @@ toolsReq.addRoom=function(app){
     }
     const creFool = ()=>{
       const temp = newRoom()
-      for(let a in rooms){
-        if(temp==rooms[a]){
-          creFool()
-        }
+      if(rooms.has(temp)){
+        creFool()
       }
-      return {id:temp}
+      return temp
     }
     for(let i =0;i<10;i++){
       const room = creFool()
-      rooms.push(room)
+      rooms.add(room)
     }
-    demoData.rooms = [...demoData.rooms,...rooms]
     let results = {}
-    results.data = demoData.rooms
+    results.data = [...rooms]
     results.status = 2
     results.msg = '获取成功！'
+    console.log(results);
     res.status(200),
     res.json(results)
   })

@@ -1,2 +1,2 @@
-var rooms=[];
+const rooms = new Set();
 module.exports=rooms

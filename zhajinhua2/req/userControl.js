@@ -17,37 +17,32 @@ var filter = require('./tools/filter')
 userControl.getUserInfo=function(app){
   app.get('/create-room',filter.authorize,function(req,res){
     let results = {}
-    let roomNo = req.query.roomNo
+    let roomNo = String(req.query.roomNo)
     let peopleNum = req.query.peopleNum
+    const detaRooms = demoData.rooms
+    console.log(roomNo)
+    console.log(detaRooms)
+    console.log(rooms)
    	/*--------判断房卡是否有效--------*/
    	// console.log(req)
-    var status = false
-    for(var n in demoData.rooms){
-      if(demoData.rooms[n].id == roomNo){
-        status = true
-      }
-    }
+    let status = detaRooms.has(roomNo)
     if(status){
-      for(let i in rooms){
-        if(rooms[i].id == roomNo){
-          status = false
-        }
-      }
-      if(!status){
+      status = rooms.size!=0&&rooms.has(roomNo)
+      if(status){
         results.status = 2
         results.msg = '房间号已被创建！'
         res.status(403),
         res.json(results)
       }
-      if(status){
-        demoData.rooms.forEach(function(room,index){
-          if (room.id==roomNo) {
-            demoData.rooms.splice(index, 1);
-          }
-        });
+      if(!status){
+        // demoData.rooms.forEach(function(room,index){
+        //   if (room.id==roomNo) {
+        //     demoData.rooms.splice(index, 1);
+        //   }
+        // });
+        detaRooms.delete(roomNo)
         let roomPlayers = new RoomPlayers({id:roomNo, peopleNum:peopleNum})
-        rooms.push(roomPlayers)
-        roomPlayers.totalRaiseMoney = roomPlayers.raiseMoney * roomPlayers.peopleNum
+        rooms.set(roomNo,roomPlayers)
         results.status = 1
         //------------------------------------//
         let user = null
@@ -85,20 +80,21 @@ userControl.addPlaytoRoom=function(app){
     let roomNo = req.query.roomNo
     /*--------判断房卡是否有效--------*/
     // console.log(req)
-    let status = false
+    let status = rooms.has(roomNo)
     // for(var n in demoData.rooms){
     //   if(demoData.rooms[n].id == roomNo){
     //     status = true
     //   }
     // }
-    let room = null
-    for(let i in rooms){
-        if(rooms[i].id == roomNo){
-          status = true
-          room= rooms[i]
-        }
-      }
+    // let room = null
+    // for(let i in rooms){
+    //     if(rooms[i].id == roomNo){
+    //       status = true
+    //       room= rooms[i]
+    //     }
+    //   }
     if(status){
+      const room = rooms.get(roomNo)
       if(room.players.length < room.peopleNum){
         //-----------------------------------//
         let user = null

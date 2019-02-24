@@ -10,12 +10,15 @@ class Gameengin{
 	  }
 	selectRoom(msg){
 		const temp = this
-		rooms.forEach(function(v,k){
-			if(v.id == msg.roomId){
-				temp.room = v
-				temp.roomIndex = k
-			}
-		})
+		this.room =rooms.get(String(msg.roomId))
+		console.log(rooms)
+		console.log(String(msg.roomId))
+		// rooms.forEach(function(v,k){
+		// 	if(v.id == msg.roomId){
+		// 		temp.room = v
+		// 		temp.roomIndex = k
+		// 	}
+		// })
 	}
 	main(msg){
 		this.selectRoom(msg)
@@ -84,7 +87,7 @@ class Gameengin{
 		if(flag<2){
 			this._finishGame()
 			this._reset()	
-			this.room.num==this.room.numTotal&&rooms.splice(index, 1);
+			this.room.num==this.room.numTotal&&rooms.delete(msg.roomId)
 		}
 	}
 	acGAME_PASS(msg){
@@ -94,7 +97,7 @@ class Gameengin{
 		if(flag<2){
 			this._finishGame()
 	 		this._reset()	
-	 		this.room.num==this.room.numTotal&&rooms.splice(index, 1); 	
+	 		this.room.num==this.room.numTotal&&rooms.delete(msg.roomId) 	
 	 	}
 	}
 	addfontMsg(msg){
@@ -146,11 +149,11 @@ class Gameengin{
 		this.room.fontAcObject.clear();
 	}
 	[sendObj](acType){
-		sendObj = {
-			acType:acType.ON_COME,
-			roomPlayers:rooms[i],
-			backObj:frontRoomPlayers
-		}
+		// sendObj = {
+		// 	acType:acType.ON_COME,
+		// 	roomPlayers:rooms[i],
+		// 	backObj:frontRoomPlayers
+		// }
 	}
 }
 Gameengin.room = null
